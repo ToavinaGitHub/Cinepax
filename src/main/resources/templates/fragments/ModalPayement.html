@@ -1,0 +1,39 @@
+<div th:fragment="Payement">
+    <div class="modal hide text-center" id="payementModal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter payement</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <input type="hidden" name="idBillet" value="" id="idBillet">
+                        <div class="col-md-12">
+                            <label for="montant" class="form-label">Montant </label>
+                            <input type="text" class="form-control" id="montant" value="" data-parsley-trigger="change" required="" >
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).on("click", ".btnPayement", function () {
+            var idBillet = $(this).data('idBillet');
+            console.log(idBillet)
+            $(".modal-body #idBillet").val(idBillet);
+            // As pointed out in comments,
+            // it is unnecessary to have to manually call the modal.
+            // $('#addBookDialog').modal('show');
+        });
+    </script>
+</div>
