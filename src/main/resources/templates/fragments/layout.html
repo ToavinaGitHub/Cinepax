@@ -1,0 +1,23 @@
+
+<html
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+  <header th:replace="~{fragments/header :: header(title='Bonokany')}"></header>
+  <aside th:replace="~{fragments/aside :: aside}"></aside>
+
+  <main layout:fragment="content-main" id="main" class="main">
+      <p>huhu</p>
+  </main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div th:replace="~{fragments/script :: script}"></div>
+</html>

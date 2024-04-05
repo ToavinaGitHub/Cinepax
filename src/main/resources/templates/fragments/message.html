@@ -1,0 +1,11 @@
+<div th:fragment="MessageAlert">
+    <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+         role="alert" id="alertMessage">
+        [[${message}]]
+    </div>
+    <div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show text-center message"
+         role="alert" id="alertError">
+        [[${error}]]
+    </div>
+</div>
+
