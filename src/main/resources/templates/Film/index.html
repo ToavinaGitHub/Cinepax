@@ -1,0 +1,132 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='film')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Tsakitsaky')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Categorie</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">film</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+
+                    <div class=" card-body">
+                        <h5 class="card-title" th:if="${isUpdate == null}">Insertion de film</h5>
+                        <h5 class="card-title" th:if="${isUpdate}">Modification de film</h5>
+                        <form class="row g-3" method="post" th:action="${isUpdate==null ? '/v1/film' : '/v1/film/edit'}" th:object="${film}" enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{idFilm}">
+                             <input type="hidden" th:field="*{etat}">
+
+                            <div class="col-md-12">
+                                <label for="inputName5" class="form-label">Titre du film </label>
+                                <input type="text" th:field="*{titre}" class="form-control" id="inputName5" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="genre" class="form-label">Genre du film </label>
+                                <select class="form-control" id="genre" th:field="*{genreFilm}">
+                                    <option th:each="genre : ${genres}" th:value="${genre.getIdGenre()}" th:text="${genre.getLibelle()}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="desc" class="form-label">Description </label>
+                                <input type="text" th:field="*{description}" class="form-control" id="desc" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="duree" class="form-label">Duree</label>
+                                <input type="number" th:field="*{duree}" class="form-control" id="duree" data-parsley-trigger="change" required="" >
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="sary" class="form-label">Sary</label>
+                                <input type="file" name="img" class="form-control" id="sary" >
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+
+                        <!-- Recherche par mot clé-->
+                        <form th:replace="~{fragments/KeywordSearch :: Search(url='/v1/film') }">
+                        </form>
+                        <!-- Fin Recherche par mot clé-->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">film data</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Titre></th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Duree</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="film : ${films}">
+                                <th scope="row" th:text="${film.getIdFilm()}"></th>
+                                <td th:text="${film.getTitre()}"></td>
+                                <td th:text="${film.getDescription()}"></td>
+                                <td th:text="${film.getDuree()}"></td>
+                                <td th:text="${film.getGenreFilm().getLibelle()}"></td>
+                                <td>
+                                    <a th:href="@{'/v1/film/' + ${film.getIdFilm()}}"><button class="btn btn-warning"  ><i class="bi bi-pencil-square"></i></button></a>
+                                    <a th:href="@{'/v1/film/delOption?id=' + ${film.getIdFilm()}} " class="btn-delete"><button  class="btn btn-danger"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav th:replace="~{fragments/Pagination :: Pagination('/v1/film')}">
+            </nav>
+            <!-- Fin Pagination -->
+
+
+
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

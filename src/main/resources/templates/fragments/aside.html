@@ -13,78 +13,44 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/venteBillet'}">
+                    <a href="components-alerts.html" th:href="@{'/'}">
                         <i class="bi bi-circle"></i><span>Vente de billet</span>
                     </a>
                 </li>
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/venteBillet/billetParUser'}">
-                        <i class="bi bi-circle"></i><span>Vente par utilisateur</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/venteBillet/billetVendu'}">
-                        <i class="bi bi-circle"></i><span>Billet vendu</span>
-                    </a>
-                </li>
-
-
 
             </ul>
         </li><!-- End Components Nav -->
-
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-check"></i><span>Pack</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-journal-check"></i><span>Statistique</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/pack'}">
-                        <i class="bi bi-circle"></i><span>Pack</span>
+                    <a href="components-alerts.html" th:href="@{'/v1/venteBillet/statParFilm'}">
+                        <i class="bi bi-circle"></i><span>Billet par film</span>
                     </a>
                 </li>
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/pack/nombreMontant'}">
-                        <i class="bi bi-circle"></i><span>Nombre et montant </span>
-                    </a>
-                </li>
-            </ul>
-        </li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-check"></i><span>Livraison</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/livraison'}">
-                        <i class="bi bi-circle"></i><span>Livraison par axe</span>
-                    </a>
-                </li>
             </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav4" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-check"></i><span>Object</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav4" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/matiere'}">
-                        <i class="bi bi-circle"></i><span>Matiere</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-alerts.html" th:href="@{'/v1/axe'}">
-                        <i class="bi bi-circle"></i><span>Axe</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        </li> <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-journal-check"></i><span>Object</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="components-alerts.html" th:href="@{'/v1/film'}">
+                    <i class="bi bi-circle"></i><span>Film</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
 
         <li class="nav-heading">Transaction</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" th:href="@{'/v1/transactionMatiere'}">
+            <a class="nav-link collapsed" >
                 <i class="bi bi-person"></i>
                 <span>Transaction matiere premiere</span>
             </a>
