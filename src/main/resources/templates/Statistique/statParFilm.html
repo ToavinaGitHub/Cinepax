@@ -1,0 +1,73 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Stat par film')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Vente</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Statistique par film</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Statistique par film</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Film</th>
+                                <th scope="col">Quantite</th>
+                                <th scope="col">Montant (MGA)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="stat : ${stats}">
+                                <th scope="row" th:text="${stat.getId_film()}"></th>
+                                <td th:text="${stat.getTitre()}"></td>
+                                <td th:text="${stat.getQuantite()}"></td>
+                                <td th:text="${stat.getMontant()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

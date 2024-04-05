@@ -1,0 +1,100 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Vente billet')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+<style>
+    .chair {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .available {
+        background-color: #4CAF50; /* Vert */
+    }
+
+    .unavailable {
+        background-color: #F44336; /* Rouge */
+    }
+    .row-range {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Ajoutez un espacement entre les rangées */
+    }
+</style>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Vente</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Vente</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header align-center align-content-center">
+                        <div th:each="r : ${places.entrySet()}">
+                            <div class="row-range">
+                                <span th:text="${r.getKey()}"></span>
+                                <div th:each="p : ${r.getValue()}" style="display: flex">
+                                    <div th:if="${p.dispo == 1}" class="chair available"> <span th:text="${p.getNumero()}"></span></div>
+                                    <div th:if="${p.dispo == 0}" class="chair unavailable"> <span th:text="${p.getNumero()}"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Vente de billet</h5>
+
+                        <form id="formValidation" th:action="@{'/v1/venteBillet'}" class="row g-3" method="post">
+                            <input type="hidden" name="idEvent" th:value="${event.getIdEvent()}">
+                            <div class="col-md-12">
+                                <label for="place" class="form-label">Places</label>
+                                <input type="text" name="places" placeholder="A_1;A_2"  class="form-control" id="place" data-parsley-trigger="change" required="">
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

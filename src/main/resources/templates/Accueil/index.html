@@ -1,0 +1,81 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Vente')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Vente</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Vente</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Evenements a venir</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Film</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Salle</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="event : ${allEvent}">
+                                <th scope="row" th:text="${event.getIdEvent()}"></th>
+                                <td th:text="${event.getDate()}"></td>
+                                <td th:text="${event.getFilm().getTitre()}"></td>
+                                <td th:text="${event.getHeure().getHours()+':'+event.getHeure().getMinutes()}"></td>
+                                <td th:text="${event.getSalle().getNom()}"></td>
+                                <td th:text="${event.getPrix()}"></td>
+                                <td>
+                                    <a th:href="@{'/v1/venteBillet/'+${event.getIdEvent()}}">Billet</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>
