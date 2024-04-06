@@ -5,6 +5,7 @@ import com.cinepax.mg.Exception.ValeurInvalideException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class Event {
     @JoinColumn(name = "idSalle" ,nullable = false)
     Salle salle;
     Timestamp heure;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date date;
     double prix;
     int etat;

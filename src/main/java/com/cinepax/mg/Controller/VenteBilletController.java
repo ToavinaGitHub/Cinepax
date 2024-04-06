@@ -2,10 +2,7 @@ package com.cinepax.mg.Controller;
 
 
 import com.cinepax.mg.Exception.ValeurInvalideException;
-import com.cinepax.mg.Model.DetailsVenteBillet;
-import com.cinepax.mg.Model.Event;
-import com.cinepax.mg.Model.PlaceSalle;
-import com.cinepax.mg.Model.VenteBillet;
+import com.cinepax.mg.Model.*;
 import com.cinepax.mg.Repository.*;
 import com.cinepax.mg.Service.PlaceService;
 import com.cinepax.mg.view.V_place_event;
@@ -41,6 +38,9 @@ public class VenteBilletController {
     DetailsVenteBilletRepository detailsVenteBilletRepository;
 
     @Autowired
+    TarifRepository tarifRepository;
+
+    @Autowired
     PlaceService placeService;
 
     @GetMapping("/{idEvent}")
@@ -48,21 +48,25 @@ public class VenteBilletController {
         Event e = eventRepository.findById(idEvent).get();
         HashMap<String,List<V_place_event>> places = placeService.getPlaceParRange(idEvent);
 
+        Age[] ages = Age.values();
+        model.addAttribute("ages",ages);
+
         model.addAttribute("places" , places);
         model.addAttribute("event" ,e);
+
 
         return "VenteBillet/index";
     }
 
     @PostMapping("")
     @Transactional
-    public String vente(@RequestParam("idEvent") String idEvent, @RequestParam("places")String places , Model model,RedirectAttributes redirectAttributes){
+    public String vente(@RequestParam("idEvent") String idEvent, @RequestParam("places")String places ,@RequestParam("age") String age , Model model,RedirectAttributes redirectAttributes){
         Event e = eventRepository.findById(idEvent).get();
         VenteBillet v = new VenteBillet();
         System.out.println(1);
         try {
             List<V_place_event> vPlaceEvents = placeService.splitByText(idEvent,places);
-            v.setPrix(e.getPrix());
+
             v.setEvent(e);
             v.setPlaces(places);
             v.setNombre(vPlaceEvents.size());
@@ -70,6 +74,12 @@ public class VenteBilletController {
             v.setEtat(1);
             v.setDateVente(new Timestamp(System.currentTimeMillis()));
             System.out.println(2);
+
+            Tarif t = tarifRepository.getTarifByHeureAge(age);
+            v.setTarif(t);
+
+            v.setPrix(t.getMontant());
+
             venteBilletRepository.save(v);
             String mess = "";
             for (V_place_event vp:vPlaceEvents
@@ -93,6 +103,9 @@ public class VenteBilletController {
         }
 
         HashMap<String,List<V_place_event>> placesTemp = placeService.getPlaceParRange(idEvent);
+
+        Age[] ages = Age.values();
+        model.addAttribute("ages",ages);
 
         model.addAttribute("places" , placesTemp);
         model.addAttribute("event" ,e);

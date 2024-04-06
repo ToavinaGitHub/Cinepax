@@ -20,5 +20,7 @@ public class Utilisateur {
     String nom;
     String prenom;
     int genre;
+
+
     Profil profil;
 }

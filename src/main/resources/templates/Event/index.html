@@ -1,0 +1,146 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='event')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Tsakitsaky')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Event</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">event</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+
+                    <div class=" card-body">
+                        <h5 class="card-title" th:if="${isUpdate == null}">Insertion de event</h5>
+                        <h5 class="card-title" th:if="${isUpdate}">Modification de event</h5>
+                        <form class="row g-3" method="post" th:action="${isUpdate==null ? '/v1/event' : '/v1/event/edit'}" th:object="${event}" encType="multipart/form-data">
+                            <input type="hidden" th:field="*{idEvent}">
+                            <input type="hidden" th:field="*{etat}">
+                            <div class="col-md-12">
+                                <label for="daty" class="form-label">Date</label>
+                                <input type="date" th:field="*{date}"  class="form-control" id="daty" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="heure" class="form-label">heure</label>
+                                <input type="time" name="lera"  class="form-control" id="heure" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="prix" class="form-label">Prix</label>
+                                <input type="text" th:field="*{prix}"  class="form-control" id="prix" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="salle" class="form-label">Salle</label>
+                                <select class="form-control" id="salle" th:field="*{salle}">
+                                    <option th:each="salle : ${salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNom()}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="film" class="form-label">Film</label>
+                                <select class="form-control" id="film" th:field="*{film}">
+                                    <option th:each="film : ${films}" th:value="${film.getIdFilm()}" th:text="${film.getTitre()}"></option>
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+
+                        <!-- Recherche par mot clé-->
+                        <form th:action="@{'/v1/event'}" method="get" id="searchForm">
+                            <div class="col-md-3 input-group mt-2">
+                                <div class="form-control">
+                                    <input  class="form-control-sm" placeholder="yyyy-mm-dd"  type="date" name="keyword" th:value="${keyword}" data-parsley-pattern="^\d{4}-\d{2}-\d{2}$" data-parsley-trigger="change">
+                                    <!-- Filtrage de nombre de donnée-->
+
+                                    <label class="form-control-sm" for="pageSize">Donnee par page:</label>
+                                    <select class="form-control-sm" form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                                            id="pageSize">
+                                        <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+                                    </select>
+
+                                    <input  class="btn btn-outline-primary" type="submit" value="Search">
+                                </div>
+                            </div>
+                            <!-- Filtrage de nombre de donnée-->
+                        </form>
+                        <!-- Fin Recherche par mot clé-->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">event data</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Film</th>
+                                <th scope="col">Salle</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Prix</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="event : ${events}">
+                                <th scope="row" th:text="${event.getIdEvent()}"></th>
+                                <td th:text="${event.getFilm().getTitre()}"></td>
+                                <td th:text="${event.getSalle().getNom()}"></td>
+                                <td th:text="${event.getHeure()}"></td>
+                                <td th:text="${event.getPrix()}"></td>
+                                <td>
+                                    <a th:href="@{'/v1/event/' + ${event.getIdEvent()}}"><button class="btn btn-warning"  ><i class="bi bi-pencil-square"></i></button></a>
+                                    <a th:href="@{'/v1/event/delOption?id=' + ${event.getIdEvent()}} " class="btn-delete"><button  class="btn btn-danger"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav th:replace="~{fragments/Pagination :: Pagination('/v1/event')}">
+            </nav>
+            <!-- Fin Pagination -->
+
+
+
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,123 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Chiffre affaire')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Chiffre d'affaire</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Chiffre affaire</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Produit par jour</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Produit</th>
+                                <th scope="col">Vola</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="produit : ${produits}">
+                                <th scope="row" th:text="${produit.getId_produit()}"></th>
+                                <td th:text="${produit.getD()}"></td>
+                                <td th:text="${produit.getLibelle()}"></td>
+                                <td th:text="${produit.getVola()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Film par jour</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Film</th>
+                                <th scope="col">Vola</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="film : ${films}">
+                                <th scope="row" th:text="${film.getId_film()}"></th>
+                                <td th:text="${film.getD()}"></td>
+                                <td th:text="${film.getTitre()}"></td>
+                                <td th:text="${film.getVola()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Vues par film</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Film</th>
+                                <th scope="col">Vue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="film : ${filmsVues}">
+                                <th scope="row" th:text="${film.getId_film()}"></th>
+                                <td th:text="${film.getTitre()}"></td>
+                                <td th:text="${film.getVue()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>
