@@ -72,6 +72,12 @@
                                 <label for="place" class="form-label">Places</label>
                                 <input type="text" name="places" placeholder="A_1;A_2"  class="form-control" id="place" data-parsley-trigger="change" required="">
                             </div>
+                            <div class="col-md-12">
+                                <label for="place" class="form-label">Age</label>
+                                <select name="age" class="form-control">
+                                    <option th:each="age : ${ages}" th:value="${age}" th:text="${age}"></option>
+                                </select>
+                            </div>
                             <div class="text-center">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>

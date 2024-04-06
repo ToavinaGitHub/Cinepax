@@ -5,6 +5,7 @@ import com.cinepax.mg.Exception.ValeurInvalideException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -26,7 +27,9 @@ public class TransactionProduit {
     double quantite;
     double pu;
     double montant;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     Timestamp daty;
+    int type;
     int etat;
 
     public TransactionProduit(String idTransactionProduit, Produit produit, double quantite, double pu, double montant, Timestamp daty, int etat) throws ValeurInvalideException {
@@ -36,6 +39,17 @@ public class TransactionProduit {
         this.setPu(pu);
         this.setMontant(montant);
         this.daty = daty;
+        this.etat = etat;
+    }
+
+    public TransactionProduit(String idTransactionProduit, Produit produit, double quantite, double pu, double montant, Timestamp daty, int type, int etat) {
+        this.idTransactionProduit = idTransactionProduit;
+        this.produit = produit;
+        this.quantite = quantite;
+        this.pu = pu;
+        this.montant = montant;
+        this.daty = daty;
+        this.type = type;
         this.etat = etat;
     }
 
@@ -74,5 +88,9 @@ public class TransactionProduit {
 
     public void setEtat(int etat) {
         this.etat = etat;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

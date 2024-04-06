@@ -42,17 +42,22 @@
                     <i class="bi bi-circle"></i><span>Film</span>
                 </a>
             </li>
+            <li>
+                <a href="components-alerts.html" th:href="@{'/v1/event'}">
+                    <i class="bi bi-circle"></i><span>Event</span>
+                </a>
+            </li>
 
         </ul>
     </li>
 
 
-        <li class="nav-heading">Transaction</li>
+        <li class="nav-heading">Chiffre d'affaire</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" >
+            <a class="nav-link collapsed" th:href="@{'/v1/chiffreAffaire/journalier'}" >
                 <i class="bi bi-person"></i>
-                <span>Transaction matiere premiere</span>
+                <span>Journalier</span>
             </a>
         </li><!-- End Profile Page Nav -->
 

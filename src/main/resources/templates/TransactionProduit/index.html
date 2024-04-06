@@ -1,0 +1,156 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='transactionProduit')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Tsakitsaky')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>transactionProduit</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">transactionProduit</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+
+                    <div class=" card-body">
+                        <h5 class="card-title" th:if="${isUpdate == null}">Insertion de transactionProduit</h5>
+                        <h5 class="card-title" th:if="${isUpdate}">Modification de transactionProduit</h5>
+                        <form class="row g-3" method="post" th:action="${isUpdate==null ? '/v1/transactionProduit' : '/v1/transactionProduit/edit'}" th:object="${transactionProduit}" encType="multipart/form-data">
+                            <input type="hidden" th:field="*{idTransactionProduit}">
+                            <input type="hidden" th:field="*{etat}">
+                            <div class="col-md-12">
+                                <label for="type" class="form-label">Type</label>
+                                <select class="form-control" id="type" th:field="*{type}">
+                                    <option th:value="10">Vente</option>
+                                    <option th:value="-10">Achat</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="produit" class="form-label">Produit</label>
+                                <select class="form-control" id="produit" th:field="*{produit}">
+                                    <option th:each="p : ${produits}" th:value="${p.getIdProduit()}" th:text="${p.getLibelle()}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="prix" class="form-label">Prix</label>
+                                <input type="text" th:field="*{pu}" class="form-control" id="prix" data-parsley-trigger="change" required="" >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="qt" class="form-label">Quantite</label>
+                                <input type="text" th:field="*{quantite}" class="form-control" id="qt" data-parsley-trigger="change" required="" >
+                            </div>
+                            <input type="hidden" th:field="*{montant}">
+                            <div class="col-md-12">
+                                <label for="daty" class="form-label">Date</label>
+                                <input type="datetime-local" name="lera" th:value="${lera}" class="form-control" id="daty" data-parsley-trigger="change" required="" >
+                            </div>
+
+                            <!---->
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+
+                        <!-- Recherche par mot clé-->
+                        <form th:action="@{'/v1/transactionProduit'}" method="get" id="searchForm">
+                            <div class="col-md-3 input-group mt-2">
+                                <div class="form-control">
+                                    <input  class="form-control-sm" placeholder="yyyy-mm-dd"  type="date" name="keyword" th:value="${keyword}" data-parsley-pattern="^\d{4}-\d{2}-\d{2}$" data-parsley-trigger="change">
+                                    <!-- Filtrage de nombre de donnée-->
+
+                                    <label class="form-control-sm" for="pageSize">Donnee par page:</label>
+                                    <select class="form-control-sm" form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                                            id="pageSize">
+                                        <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+                                    </select>
+
+                                    <input  class="btn btn-outline-primary" type="submit" value="Search">
+                                </div>
+                            </div>
+                            <!-- Filtrage de nombre de donnée-->
+                        </form>
+                        <!-- Fin Recherche par mot clé-->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">transactionProduit data</h5>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Produit</th>
+                                <th scope="col">Prix unitaire (MGA)</th>
+                                <th scope="col">Quantite</th>
+                                <th scope="col">Montant (MGA)</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="transactionProduit : ${transactionProduits}">
+                                <th scope="row" th:text="${transactionProduit.getIdTransactionProduit()}"></th>
+                                <td th:text="${transactionProduit.getDaty()}"></td>
+                                <td th:text="${transactionProduit.getProduit().getLibelle()}"></td>
+                                <td th:text="${transactionProduit.getPu()}"></td>
+                                <td th:text="${transactionProduit.getQuantite()}"></td>
+                                <td th:text="${transactionProduit.getMontant()}"></td>
+                                <td th:if="${transactionProduit.getType()==10}">Vente</td>
+                                <td th:if="${transactionProduit.getType()==-10}">Achat</td>
+                                <td>
+                                    <a th:href="@{'/v1/transactionProduit/' + ${transactionProduit.getIdTransactionProduit()}}"><button class="btn btn-warning"  ><i class="bi bi-pencil-square"></i></button></a>
+                                    <a th:href="@{'/v1/transactionProduit/delOption?id=' + ${transactionProduit.getIdTransactionProduit()}} " class="btn-delete"><button  class="btn btn-danger"><i class="bi bi-trash"></i></button></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav th:replace="~{fragments/Pagination :: Pagination('/v1/transactionProduit')}">
+            </nav>
+            <!-- Fin Pagination -->
+
+
+
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

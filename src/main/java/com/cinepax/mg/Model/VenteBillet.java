@@ -28,6 +28,12 @@ public class VenteBillet {
     @Column(nullable = true)
     String places;
     Timestamp dateVente;
+
+
+    @ManyToOne
+            @JoinColumn(name = "idTarif" ,nullable = true)
+    Tarif tarif;
+
     int etat;
 
     public VenteBillet(String idVenteBillet, Event event, double prix, double nombre, double montant, String places, Timestamp dateVente, int etat) throws ValeurInvalideException {
@@ -39,6 +45,12 @@ public class VenteBillet {
         this.places = places;
         this.dateVente = dateVente;
         this.etat = etat;
+    }
+
+
+
+    public void setTarif(Tarif tarif) {
+        this.tarif = tarif;
     }
 
     public void setIdVenteBillet(String idVenteBillet) {
