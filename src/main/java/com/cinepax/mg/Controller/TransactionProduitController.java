@@ -73,7 +73,7 @@ public class TransactionProduitController {
     }
 
     @PostMapping("")
-    public String save(@Valid TransactionProduit transactionProduit , BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String save(@Valid TransactionProduit transactionProduit ,@RequestParam("lera") String lera, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             String message = "";
             for (int i = 0; i < bindingResult.getAllErrors().size(); i++) {
@@ -84,14 +84,15 @@ public class TransactionProduitController {
         }
         try{
             transactionProduit.setEtat(1);
-            SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-
-            System.out.println(transactionProduit.getDaty());
-            //transactionProduit.setDaty();
+            SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date d= s.parse(lera);
+            Timestamp t = new Timestamp(d.getTime());
+            transactionProduit.setDaty(t);
             transactionProduitRepository.save(transactionProduit);
             redirectAttributes.addFlashAttribute("success", "TransactionProduit ajoutée avec succès");
             redirectAttributes.addFlashAttribute("message" , "Insertion avec succes");
         }catch(Exception e){
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Transaction echouée");
         }
 
@@ -103,6 +104,7 @@ public class TransactionProduitController {
             TransactionProduit t = transactionProduitRepository.findById(id).get();
 
             model.addAttribute("transactionProduit", t);
+            model.addAttribute("lera" ,t.getDaty());
             model.addAttribute("pageTitle", "Edit TransactionProduit (ID: " + id + ")");
 
             //List<TransactionProduit> transactionProduits = transactionProduitRepository.findAll();
@@ -126,7 +128,6 @@ public class TransactionProduitController {
     public String delete(@RequestParam String id , RedirectAttributes redirectAttributes){
         TransactionProduit ct =  transactionProduitRepository.findById(id).get();
         //transactionProduitRepository.delete(ct);
-
         ct.setEtat(0);
         transactionProduitRepository.save(ct);
 
@@ -135,7 +136,7 @@ public class TransactionProduitController {
     }
 
     @PostMapping("/edit")
-    public String modifier(@Valid @ModelAttribute TransactionProduit transactionProduit,BindingResult bindingResult,RedirectAttributes redirectAttributes){
+    public String modifier(@Valid @ModelAttribute TransactionProduit transactionProduit,@RequestParam("lera") String lera,BindingResult bindingResult,RedirectAttributes redirectAttributes){
         String message = "";
         if(bindingResult.hasErrors()){
             for (int i = 0; i < bindingResult.getAllErrors().size(); i++) {
@@ -146,7 +147,10 @@ public class TransactionProduitController {
             return "redirect:/v1/transactionProduit";
         }
         try{
-            System.out.println(transactionProduit.getDaty());
+            SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date d= s.parse(lera);
+            Timestamp t = new Timestamp(d.getTime());
+            transactionProduit.setDaty(t);
             transactionProduitRepository.save(transactionProduit);
         }catch (Exception e){
             message += e.getMessage()+" ; ";

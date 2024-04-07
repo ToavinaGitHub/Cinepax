@@ -19,7 +19,7 @@ public class SessionInvalide extends OncePerRequestFilter {
 
     private static final String SIMPLE_USER_PAGE = "/v1/accueil";
     private static final List<String> ALLOWED_URIS= Arrays.asList( "/", "/login" );
-    public static final List<String> SUPER_USER_ALLOWED_URIS = Arrays.asList("/v1/event");
+    public static final List<String> SUPER_USER_ALLOWED_URIS = Arrays.asList("/v1/event" , "/v1/chiffreAffaire/journalier");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -28,7 +28,7 @@ public class SessionInvalide extends OncePerRequestFilter {
         boolean isAllowedURI = isAllowedURI(requestURI);
 
         if (!isAllowedURI) {
-            System.out.println(requestURI);
+
             HttpSession session = request.getSession(false);
             if (session == null || session.getAttribute("user") == null) {
                 redirectToLogin(request, response);
