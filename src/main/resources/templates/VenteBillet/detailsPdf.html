@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket de cinéma</title>
+    <link rel="stylesheet" type="text/css" href="/css/detailsBillet.css">
+</head>
+<body>
+
+<div class="ticket">
+    <div class="header">
+        <h1 style="color: black">Cinepax</h1>
+    </div>
+    <div class="content">
+        <div class="movie-details">
+            <h2 th:text="${det.getVenteBillet().getEvent().getFilm().getTitre()}"></h2>
+            <p>Salle:<span th:text="${det.getVenteBillet().getEvent().getSalle().getNom()}"></span></p>
+            <p>Date: <span th:text="${det.getVenteBillet().getEvent().getHeure()}"></span></p>
+            <p>Place : <span th:text="${det.getPlaceSalle().getRange()+' '+det.getPlaceSalle().getNumero()}"></span></p>
+            <p>Prix : <span th:text="${det.getVenteBillet().getPrix()}"></span>MGA</p>
+        </div>
+        <div class="qr-code">
+            Merci pour votre achat
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

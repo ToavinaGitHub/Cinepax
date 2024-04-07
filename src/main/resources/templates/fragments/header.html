@@ -172,7 +172,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"  th:if="${session.user}" >
             <li class="dropdown-header">
               <h6 th:text="${session.user.getNom()}+' '+ ${session.user.getPrenom()}"></h6>
-              <span th:text="${session.user.getProfil().getDescription()}"></span>
+              <span th:text="${session.user.getProfil()}"></span>
             </li>
             <li>
               <hr class="dropdown-divider">

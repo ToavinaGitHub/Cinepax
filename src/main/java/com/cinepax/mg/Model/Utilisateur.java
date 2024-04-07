@@ -21,6 +21,9 @@ public class Utilisateur {
     String prenom;
     int genre;
 
-
+    @Enumerated(EnumType.STRING)
     Profil profil;
+
+    String email;
+    String password;
 }

@@ -1,0 +1,78 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" type="text/css" href="/css/detailsBillet.css">
+<head th:replace="~{fragments/head :: head(title='Vente')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Vente</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Details ticket</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class=" card-body">
+                        <h5 class="card-title" >Liste des billets</h5>
+                        <div class="ticket" th:each="det : ${details}">
+                            <div class="header">
+                                <h1 style="color: black">Cinepax</h1>
+                            </div>
+                            <div class="content">
+                                <div class="movie-details">
+                                    <h2 th:text="${event.getFilm().getTitre()}"></h2>
+                                    <p>Salle:<span th:text="${event.getSalle().getNom()}"></span></p>
+                                    <p>Date: <span th:text="${event.getHeure()}"></span></p>
+                                    <p>Place : <span th:text="${det.getPlaceSalle().getRange()+' '+det.getPlaceSalle().getNumero()}"></span></p>
+                                    <p>Prix : <span th:text="${det.getVenteBillet().getPrix()}"></span>MGA</p>
+                                </div>
+                                <div class="qr-code">
+                                    <a th:href="@{'/v1/venteBillet/pdf?idDetails='+${det.getIdDetailsVenteBillet()}}">
+                                        <button class="btn btn-outline-primary" >
+                                            Exporter en pdf
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

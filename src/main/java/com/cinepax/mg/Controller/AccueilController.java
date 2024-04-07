@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/v1/accueil")
 public class AccueilController {
     @Autowired
     EventRepository eventRepository;
