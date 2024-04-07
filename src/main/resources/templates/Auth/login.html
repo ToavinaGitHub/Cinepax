@@ -1,0 +1,63 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Page de connection')}"></head>
+<body>
+<main>
+    <div class="container">
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="" class="logo d-flex align-items-center w-auto">
+                                <img src="/img/logo.png" alt="">
+                                <span class="d-none d-lg-block">Tsakitsaky</span>
+                            </a>
+                        </div><!-- End Logo -->
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                                </div>
+                                <form id="formValidation" class="row g-3"  method="post" th:action="@{/login}" th:object="${utilisateur}"  data-parsley-validate="">
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" th:field="*{email}" value="admin@gmail.com" class="form-control" id="email" data-parsley-trigger="change" required="">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" th:field="*{password}" value="admin" class="form-control" id="password" required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input class="btn btn-primary w-100" type="submit" value="Login">
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Don't have account? <a>Create an account</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</main>
+</body>
+<div th:replace="~{fragments/script :: script}"></div>
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+</html>

@@ -104,6 +104,7 @@ public class FilmController {
                 }
             }
 
+            film.setEtat(1);
             filmRepository.save(film);
             redirectAttributes.addFlashAttribute("success", "Film ajoutée avec succès");
             redirectAttributes.addFlashAttribute("message" , "Insertion avec succes");
