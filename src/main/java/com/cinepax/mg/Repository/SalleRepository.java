@@ -16,4 +16,7 @@ public interface SalleRepository extends CrudRepository<Salle, String> , JpaRepo
     List<Salle> findSalleByEtat(int etat);
     @Query(value = "SELECT DISTINCT range from place_salle WHERE id_salle= ?1",nativeQuery = true)
     List<String> getRangeCountBySalle(String idSalle);
+
+
+    Salle findSalleByEtatAndNomIgnoreCase(int etat , String nom);
 }

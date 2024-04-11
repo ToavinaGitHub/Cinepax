@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class GenreFilm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     String idGenre;
+
     String libelle;
     int etat;
 
