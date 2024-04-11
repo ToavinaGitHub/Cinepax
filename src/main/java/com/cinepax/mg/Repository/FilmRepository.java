@@ -17,6 +17,9 @@ public interface FilmRepository extends CrudRepository<Film, String> , JpaReposi
 
     Page<Film> findFilmByEtatAndTitreContainingIgnoreCase(int etat, String key, Pageable pageable);
 
+
+    public Film findFilmByEtatAndTitreIgnoreCase(int etat,String titre);
+
     List<Film> findFilmByEtat(int etat);
 
     Page<Film> findFilmByEtat(int etat,Pageable p);

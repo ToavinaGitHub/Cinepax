@@ -16,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class SessionInvalide extends OncePerRequestFilter {
     private static final String LOGIN_URL = "/";
-
     private static final String SIMPLE_USER_PAGE = "/v1/accueil";
     private static final List<String> ALLOWED_URIS= Arrays.asList( "/", "/login" );
     public static final List<String> SUPER_USER_ALLOWED_URIS = Arrays.asList("/v1/event" , "/v1/chiffreAffaire/journalier");

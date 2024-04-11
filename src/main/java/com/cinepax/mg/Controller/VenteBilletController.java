@@ -18,17 +18,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import java.io.BufferedReader;
 
 @Controller
 @RequestMapping("/v1/venteBillet")
@@ -44,6 +50,9 @@ public class VenteBilletController {
 
     @Autowired
     SalleRepository salleRepository;
+
+    @Autowired
+    GenreFilmRepository genreFilmRepository;
 
     @Autowired
     DetailsVenteBilletRepository detailsVenteBilletRepository;
@@ -71,7 +80,6 @@ public class VenteBilletController {
 
         model.addAttribute("places" , places);
         model.addAttribute("event" ,e);
-
 
         return "VenteBillet/index";
     }
@@ -166,4 +174,80 @@ public class VenteBilletController {
 
         response.getOutputStream().write(target.toByteArray());
     }
+
+
+    @GetMapping("/csv")
+    public String importCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
+
+        if (file.isEmpty()) {
+            return "Please select a file to upload.";
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(","); // Assuming CSV columns are separated by commas
+
+                String numSeance = data[0];
+                String titreFilm = data[1];
+                String genreFilm = data[2];
+                String nomSalle = data[3];
+                String daty = data[4];
+                String lera = data[5];
+
+                GenreFilm g = genreFilmRepository.findGenreFilmByEtatAndAndLibelleIgnoreCase(1,genreFilm);
+
+                if(g == null){
+                    GenreFilm temp = new GenreFilm();
+                    temp.setLibelle(genreFilm);
+                    temp.setEtat(1);
+                    genreFilmRepository.save(temp);
+                    g = temp;
+                }
+
+                Salle s = salleRepository.findSalleByEtatAndNomIgnoreCase(1,nomSalle);
+                if(s==null){
+                    Salle temp = new Salle();
+                    temp.setNom(nomSalle);
+                    temp.setEtat(1);
+                    temp.setCapacite(100);
+                    s = temp;
+                }
+                Film f = filmRepository.findFilmByEtatAndTitreIgnoreCase(1,titreFilm);
+                if(f == null){
+                    Film temp = new Film();
+                    temp.setDuree(75);
+                    temp.setDescription("Milay");
+                    temp.setTitre(titreFilm);
+                    temp.setSary(titreFilm+".png");
+                    temp.setEtat(1);
+                    temp.setGenreFilm(g);
+                    filmRepository.save(temp);
+                    f = temp;
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date date = dateFormat.parse(daty);
+                    Event event = new Event();
+                    event.setPrix(0);
+                    event.setSalle(s);
+                    event.setFilm(f);
+                    event.setDate(date);
+
+                    eventRepository.save(event);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("error" , "Importation inachevé");
+            return "redirect:/v1/venteBillet";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
+        return "redirect:/v1/venteBillet";
+    }
+
+
 }

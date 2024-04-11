@@ -11,7 +11,7 @@ public interface GenreFilmRepository extends CrudRepository<GenreFilm, String> ,
 
 
 
-
+    public GenreFilm findGenreFilmByEtatAndAndLibelleIgnoreCase(int etat,String lib);
 
 
 
