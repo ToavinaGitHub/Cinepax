@@ -1,7 +1,8 @@
-10,Pi�ge de cristal,Action,Salle 4,01/03/24,10:30:00
-14,Pi�ge de cristal,Action,Salle 4,01/03/24,15:30:00
-11,Pi�ge de cristal,Action,Salle 4,02/03/24,10:30:00
-90,Shrek 2,Animation,Salle 1,03/03/24,10:00:00
-18,Pi�ge de cristal,Action,Salle 3,02/03/24,19:00:00
-17,Shrek 2,Animation,Salle 2,03/03/24,10:00:00
-21,Hot Shot,Com�die,Salle 1,01/02/24,21:00:00
+    NumSeance,Film,Categorie,Salle,Date,Heure
+    10,Piege de cristal,Action,Salle 4,30/02/24,10:30:00
+    14,Piege de cristal,Action,Salle 4,01/03/24,15:30:00
+    11,Piege de cristal,Action,Salle 4,02/03/24,10:30:00
+    90,Shrek 2,Animation,Salle 1,03/03/24,10:00:00
+    18,Piege de cristal,Action,Salle 3,02/03/24,19:00:00
+    17,Shrek 2,Animation,Salle 2,03/03/24,10:00:00
+    21,Hot Shot,Comedie,Salle 1,01/02/24,21:00:00
