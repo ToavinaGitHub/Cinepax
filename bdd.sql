@@ -353,3 +353,62 @@ group by f.id_film
 order by vue desc ;
 
 SELECT id_film,titre,vue from v_film_plus_vues_jour;
+
+
+drop table dataCsv;
+
+CREATE TABLE dataCsv(
+    numSeance int,
+    film varchar(255),
+    categorie varchar(255),
+    salle varchar(255),
+    daty date,
+    heure time
+);
+
+
+
+
+select * from data_csv dt join film f on dt.film=f.titre;
+
+----Insert genre from csv
+INSERT INTO genre_film(etat, libelle)  (select 1,dt.categorie from data_csv dt left join genre_film g on dt.categorie=g.libelle where g.id_genre is null group by dt.categorie );
+
+
+---Insert film from csv
+INSERT INTO film(description, duree, etat, sary, titre, id_genre_film) (
+select 'haha' as description,75 as duree,1 as etat,concat(dt.film,'.png') as sary,dt.film as titre,g.id_genre as id_genre_film
+from data_csv dt
+left join film  f
+on dt.film=f.titre
+join genre_film g
+on dt.categorie=g.libelle
+where f.id_film is null
+group by dt.film,g.id_genre);
+
+---Insert salle from csv
+INSERT INTO salle(capacite, etat, nom) (
+SELECT 100 as capacite,1 as etat,dt.salle as nom
+from data_csv dt
+left join
+salle s on dt.salle=s.nom
+where s.id_salle is null
+group by dt.salle);
+
+INSERT INTO data_csv(categorie, film, num_seance, salle, daty, heure) values
+('test','test',100,'test','2024-02-30','10:30:00');
+
+
+----Insert event from csv
+
+INSERT INTO event(date, etat, heure, prix, id_film, id_salle) (
+SELECT daty as date,1 as etat,dt.heure as heure,0 as prix,f.id_film,s.id_salle
+FROM data_csv dt
+join film f on
+    dt.film=f.titre
+join genre_film g on
+    dt.categorie=g.libelle
+join salle s on
+    dt.salle=s.nom);
+
+

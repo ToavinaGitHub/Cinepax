@@ -34,7 +34,7 @@ public class SessionInvalide extends OncePerRequestFilter {
                 return;
             }
             Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
-            System.out.println(utilisateur.getProfil());
+
             if (isSuperUser(requestURI) && !isSuperUser(utilisateur)) {
                 response.sendRedirect(request.getContextPath() + SIMPLE_USER_PAGE);
                 return;

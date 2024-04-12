@@ -2,6 +2,7 @@ package com.cinepax.mg.Controller;
 
 
 import com.cinepax.mg.Exception.ValeurInvalideException;
+import com.cinepax.mg.Service.VenteBilletService;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,6 +63,9 @@ public class VenteBilletController {
 
     @Autowired
     PlaceService placeService;
+
+    @Autowired
+    VenteBilletService venteBilletService;
 
     @Autowired
     ServletContext servletContext;
@@ -175,7 +179,7 @@ public class VenteBilletController {
         response.getOutputStream().write(target.toByteArray());
     }
 
-
+/*
     @GetMapping("/csv")
     public String importCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
 
@@ -247,6 +251,20 @@ public class VenteBilletController {
         }
         redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
         return "redirect:/v1/venteBillet";
+    }*/
+    @PostMapping("/csv")
+    public String fromCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
+        try {
+            String mess = venteBilletService.insertAllData(file);
+            if(!mess.equals(" ")){
+                redirectAttributes.addFlashAttribute("error" , mess);
+                return "redirect:/v1/accueil";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
+        return "redirect:/v1/accueil";
     }
 
 
