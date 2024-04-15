@@ -3,7 +3,6 @@
         <div class="form-control">
             <input  class="form-control-sm" placeholder="Mot clé" type="text" name="keyword" th:value="${keyword}">
             <!-- Filtrage de nombre de donnée-->
-
             <label class="form-control-sm" for="pageSize">Donnee par page:</label>
             <select class="form-control-sm" form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
                     id="pageSize">

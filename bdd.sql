@@ -411,4 +411,20 @@ join genre_film g on
 join salle s on
     dt.salle=s.nom);
 
+----------Using temporary table
+
+CREATE TEMPORARY TABLE errorTable(
+    id serial primary key,
+    message TEXT
+);
+
+INSERT INTO errorTable(message) values
+('Parse blem'),
+('Date blem');
+
+SELECT * from errorTable;
+
+INSERT INTO data_csv(categorie, film, num_seance, salle, heure, daty) VALUES ();
+
+
 

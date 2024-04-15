@@ -1,6 +1,5 @@
 package com.cinepax.mg.Controller;
 
-
 import com.cinepax.mg.Exception.ValeurInvalideException;
 import com.cinepax.mg.Service.VenteBilletService;
 import com.itextpdf.html2pdf.ConverterProperties;
@@ -26,16 +25,13 @@ import org.thymeleaf.context.Context;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import java.io.BufferedReader;
 
 @Controller
 @RequestMapping("/v1/venteBillet")
@@ -266,6 +262,4 @@ public class VenteBilletController {
         redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
         return "redirect:/v1/accueil";
     }
-
-
 }

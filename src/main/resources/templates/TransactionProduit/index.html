@@ -59,7 +59,6 @@
                                 <label for="daty" class="form-label">Date</label>
                                 <input type="datetime-local" name="lera" th:value="${lera}" class="form-control" id="daty" data-parsley-trigger="change" required="" >
                             </div>
-
                             <!---->
                             <div class="text-center">
                                 <input type="submit" class="btn btn-primary" value="Submit">
@@ -82,7 +81,7 @@
                                     <label class="form-control-sm" for="pageSize">Donnee par page:</label>
                                     <select class="form-control-sm" form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
                                             id="pageSize">
-                                        <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+                                        <option th:each="s : ${ {3 , 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
                                     </select>
 
                                     <input  class="btn btn-outline-primary" type="submit" value="Search">
