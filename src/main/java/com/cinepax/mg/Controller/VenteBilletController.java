@@ -251,15 +251,15 @@ public class VenteBilletController {
     @PostMapping("/csv")
     public String fromCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
         try {
-            String mess = venteBilletService.insertAllData(file);
-            if(!mess.equals(" ")){
-                redirectAttributes.addFlashAttribute("error" , mess);
-                return "redirect:/v1/accueil";
+            String[] mess = venteBilletService.insertAllData(file);
+            redirectAttributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
+            if(!mess[1].equals(" ")){
+                redirectAttributes.addFlashAttribute("error" , mess[1]);
             }
+            return "redirect:/v1/accueil";
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            redirectAttributes.addFlashAttribute("error" , "Erreur d'importation");
         }
-        redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
         return "redirect:/v1/accueil";
     }
 }

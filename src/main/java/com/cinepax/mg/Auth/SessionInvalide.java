@@ -46,7 +46,6 @@ public class SessionInvalide extends OncePerRequestFilter {
 
     private boolean isAllowedURI(String requestURI) {
         return ALLOWED_URIS.contains(requestURI);
-
     }
 
     private boolean isSuperUser(String requestURI) {
@@ -56,7 +55,6 @@ public class SessionInvalide extends OncePerRequestFilter {
     private boolean isSuperUser(Utilisateur utilisateur) {
         return utilisateur.getProfil()== Profil.SUPERUSER;
     }
-
     private void redirectToLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect(request.getContextPath() + LOGIN_URL);
     }

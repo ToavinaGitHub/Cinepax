@@ -93,7 +93,7 @@ public class FilmController {
             }
 
             if (!file.isEmpty()) {
-
+                System.out.println(file.getOriginalFilename().lastIndexOf("."));
                 String fileName = StringUtils.cleanPath(film.getIdFilm()+"_"+file.getOriginalFilename());
                 Path uploadPath = Paths.get(uploadDir, fileName);
                 try (OutputStream outputStream = Files.newOutputStream(uploadPath)) {
@@ -105,11 +105,12 @@ public class FilmController {
             }
 
             film.setEtat(1);
-            filmRepository.save(film);
+           // filmRepository.save(film);
             redirectAttributes.addFlashAttribute("success", "Film ajoutée avec succès");
             redirectAttributes.addFlashAttribute("message" , "Insertion avec succes");
         }catch(Exception e){
-            redirectAttributes.addFlashAttribute("error", "Transaction echouée");
+            redirectAttributes.addFlashAttribute("error", "Transaction echouée : "+e.getMessage()
+            );
         }
 
         return "redirect:/v1/film";
@@ -131,6 +132,7 @@ public class FilmController {
 
             model.addAttribute("isUpdate" , 1);
             model.addAttribute("films", films);
+
             return "Film/index";
         } catch (Exception e) {
 
@@ -138,7 +140,7 @@ public class FilmController {
             return "redirect:/v1/film";
         }
     }
-
+    
     @GetMapping("/delOption")
     public String delete(@RequestParam String id , RedirectAttributes redirectAttributes){
         Film ct =  filmRepository.findById(id).get();
@@ -153,6 +155,10 @@ public class FilmController {
     @PostMapping("/edit")
     public String modifier(@Valid @ModelAttribute Film film,BindingResult bindingResult,RedirectAttributes redirectAttributes){
         String message = "";
+
+        Film temp = filmRepository.findById(film.getIdFilm()).get();
+
+        film.setSary(temp.getSary());
         if(bindingResult.hasErrors()){
             for (int i = 0; i < bindingResult.getAllErrors().size(); i++) {
                 message += bindingResult.getAllErrors().get(i).getDefaultMessage()+";";

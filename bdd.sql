@@ -328,8 +328,6 @@ group by d , pr.id_produit;
 
 SELECT d,id_produit,libelle,vola from v_montant_produit_jour;
 
-
-
 drop view v_montant_film_jour;
 -----Chiffre d'affaire par jour par Film
 CREATE OR REPLACE view v_montant_film_jour as
@@ -366,20 +364,23 @@ CREATE TABLE dataCsv(
     heure time
 );
 
+SELECT * FROM film;
+SELECT * from data_csv;
 
+CREATE TEMPORARY TABLE temp AS SELECT * from data_csv;
 
+SELECT * FROM temp;
 
 select * from data_csv dt join film f on dt.film=f.titre;
 
 ----Insert genre from csv
 INSERT INTO genre_film(etat, libelle)  (select 1,dt.categorie from data_csv dt left join genre_film g on dt.categorie=g.libelle where g.id_genre is null group by dt.categorie );
 
-
 ---Insert film from csv
 INSERT INTO film(description, duree, etat, sary, titre, id_genre_film) (
 select 'haha' as description,75 as duree,1 as etat,concat(dt.film,'.png') as sary,dt.film as titre,g.id_genre as id_genre_film
 from data_csv dt
-left join film  f
+left join film f
 on dt.film=f.titre
 join genre_film g
 on dt.categorie=g.libelle
@@ -397,7 +398,6 @@ group by dt.salle);
 
 INSERT INTO data_csv(categorie, film, num_seance, salle, daty, heure) values
 ('test','test',100,'test','2024-02-30','10:30:00');
-
 
 ----Insert event from csv
 
@@ -427,4 +427,10 @@ SELECT * from errorTable;
 INSERT INTO data_csv(categorie, film, num_seance, salle, heure, daty) VALUES ();
 
 
+SELECT key,gr_content as content FROM content;
 
+SELECT key ,
+       CASE
+           WHEN "fr_content" then fr_content
+        END AS dispo
+       FROM content;

@@ -18,7 +18,7 @@ public class VenteBillet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     String idVenteBillet;
     @ManyToOne
-            @JoinColumn(name = "idEvent" ,nullable = false)
+    @JoinColumn(name = "idEvent" ,nullable = false)
     Event event;
     double prix;
     double nombre;
@@ -29,6 +29,7 @@ public class VenteBillet {
     String places;
     Timestamp dateVente;
 
+    // TODO: add column
 
     @ManyToOne
             @JoinColumn(name = "idTarif" ,nullable = true)

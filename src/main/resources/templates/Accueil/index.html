@@ -8,19 +8,25 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Vente</h1>
+        <h1  th:text="${content.get('Vente')}"></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Vente</li>
+                <li class="breadcrumb-item active" th:text="${content.get('Vente')}"></li>
             </ol>
         </nav>
     </div>
 
     <section class="section">
-
         <!-- Affichage message-->
         <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <span th:text="${content.get('Accueil')}"></span>
+                </div>
+            </div>
+        </div>
         <!-- Fin Affichage message-->
 
         <div class="row">
