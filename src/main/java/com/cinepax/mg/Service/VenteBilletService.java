@@ -23,11 +23,14 @@ public class VenteBilletService {
     @Autowired
     DataCsvRepository dataCsvRepository;
 
-    public String insertAllData(MultipartFile file) throws Exception {
+    public String[] insertAllData(MultipartFile file) throws Exception {
+        String[] mess = new String[2];
+        int nombreTafiditra = 0;
         String messError = " ";
         if (file.isEmpty()) {
             throw new Exception("File vide");
         }
+
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
             int ligne =1;
@@ -63,6 +66,7 @@ public class VenteBilletService {
                     d.setDaty(date);
                     d.setHeure(time);
 
+                    nombreTafiditra+=1;
                     dataCsvRepository.save(d);
                    }catch (Exception e){
                     messError+=e.getMessage()+" Ligne : "+ligne;
@@ -72,7 +76,10 @@ public class VenteBilletService {
         }catch (Exception e){
             messError+=e.getMessage();
         }
-        return messError;
+
+        mess[0] = Integer.toString(nombreTafiditra);
+        mess[1] = messError;
+        return mess;
     }
 
 }
