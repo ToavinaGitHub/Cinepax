@@ -4,6 +4,7 @@ import com.cinepax.mg.Exception.ValeurInvalideException;
 import com.cinepax.mg.Model.Utilisateur;
 
 import com.cinepax.mg.Repository.UtilisateurRepository;
+import com.cinepax.mg.Service.ContentService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+
 @Controller
 public class UtilisateurController {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
+	@Autowired
+	ContentService contentService;
+
 	@GetMapping("/")
-	public String login(Model model) throws ValeurInvalideException {
+	public String login(Model model) throws ValeurInvalideException, IOException {
 		Utilisateur u = new Utilisateur();
 		u.setEmail("toavina@gmail.com");
 		u.setPassword("toavina");
 		model.addAttribute("utilisateur",u);
+
+		contentService.getContentFromFile("fr");
+
 		return "Auth/login";
 	}
 	@PostMapping("/login")
