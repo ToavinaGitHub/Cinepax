@@ -434,3 +434,6 @@ SELECT key ,
            WHEN "fr_content" then fr_content
         END AS dispo
        FROM content;
+
+
+BEGIN

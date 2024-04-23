@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +34,10 @@ public class AccueilController {
     ContentService contentService;
 
     @GetMapping("")
-    public String index(@RequestParam(name = "lang",required = false,defaultValue = "fr") String lang, HttpSession session, Model model){
+    public String index(@RequestParam(name = "lang",required = false,defaultValue = "fr") String lang, HttpSession session, Model model) throws IOException {
         HashMap<String,String> allLanguage = contentService.getContentByLanguage(lang);
-
+        HashMap<String,String> fileLangs = contentService.getContentFromFile(lang);
+        allLanguage.putAll(fileLangs);
         session.setAttribute("lang",lang);
         List<Event> allEvent = eventRepository.findEventByEtat(1);
 
@@ -43,4 +45,5 @@ public class AccueilController {
         model.addAttribute("content",allLanguage);
         return "Accueil/index";
     }
+
 }

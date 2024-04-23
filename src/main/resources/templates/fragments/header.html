@@ -20,8 +20,11 @@
           </a>
         </li><!-- End Search Icon-->
         <li class="nav-item d-block d-lg">
-          <a class="nav-link nav " href="#">
+          <a class="nav-link nav " href="#" th:if="${content==null}">
               Accueil
+          </a>
+          <a class="nav-link nav " href="#" th:if="${content!=null}" th:text="${content.get('Accueil-menu')}">
+
           </a>
         </li>
         <li class="nav-item d-block d-lg">
