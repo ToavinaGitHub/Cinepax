@@ -20,8 +20,6 @@ public class ContentService {
     @Autowired
     ContentRepository contentRepository;
 
-
-
     private static String readJsonFile(String path) {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {

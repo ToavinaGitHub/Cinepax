@@ -20,6 +20,8 @@ public class Film {
     String titre;
     String description;
     double duree;
+
+
     String sary;
 
     int etat;

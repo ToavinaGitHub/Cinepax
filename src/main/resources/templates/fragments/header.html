@@ -28,13 +28,19 @@
           </a>
         </li>
         <li class="nav-item d-block d-lg">
-          <a class="nav-link" href="#">
-              Message
+          <a class="nav-link nav " href="#" th:if="${content==null}">
+            Message
+          </a>
+          <a class="nav-link nav " href="#" th:if="${content!=null}" th:text="${content.get('Message-menu')}">
+
           </a>
         </li>
         <li class="nav-item d-block d-lg">
-          <a class="nav-link nav " href="#">
-              Profile
+          <a class="nav-link nav " href="#" th:if="${content==null}">
+            Profile
+          </a>
+          <a class="nav-link nav " href="#" th:if="${content!=null}" th:text="${content.get('Profile-menu')}">
+
           </a>
         </li>
 
