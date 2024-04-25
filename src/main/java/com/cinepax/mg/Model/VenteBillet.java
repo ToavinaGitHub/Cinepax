@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 @NoArgsConstructor
 @Getter
@@ -36,6 +38,11 @@ public class VenteBillet {
     Tarif tarif;
 
     int etat;
+
+    public String getMoneyVersion(double vola){
+        DecimalFormat df = new DecimalFormat("#,##0");
+        return df.format(vola);
+    }
 
     public VenteBillet(String idVenteBillet, Event event, double prix, double nombre, double montant, String places, Timestamp dateVente, int etat) throws ValeurInvalideException {
         this.idVenteBillet = idVenteBillet;

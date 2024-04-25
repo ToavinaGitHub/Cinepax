@@ -2,6 +2,7 @@ package com.cinepax.mg.Controller;
 
 
 import com.cinepax.mg.Model.Event;
+import com.cinepax.mg.Model.VenteBillet;
 import com.cinepax.mg.Repository.ContentRepository;
 import com.cinepax.mg.Repository.EventRepository;
 import com.cinepax.mg.Service.ContentService;
@@ -41,6 +42,9 @@ public class AccueilController {
         session.setAttribute("lang",lang);
         List<Event> allEvent = eventRepository.findEventByEtat(1);
 
+        VenteBillet v = new VenteBillet();
+
+        model.addAttribute("venteBillet",v);
         model.addAttribute("allEvent" , allEvent);
         model.addAttribute("content",allLanguage);
         return "Accueil/index";

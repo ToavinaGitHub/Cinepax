@@ -1,6 +1,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+
 <head th:replace="~{fragments/head :: head(title='Vente')}"></head>
 <body>
 <header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
@@ -64,7 +65,7 @@
                                 <td th:text="${event.getFilm().getTitre()}"></td>
                                 <td th:text="${event.getHeure().getHours()+':'+event.getHeure().getMinutes()}"></td>
                                 <td th:text="${event.getSalle().getNom()}"></td>
-                                <td th:text="${event.getPrix()}"></td>
+                                <td style="text-align: right" th:text="${venteBillet.getMoneyVersion(event.getPrix())}"></td>
                                 <td>
                                     <a th:href="@{'/v1/venteBillet/'+${event.getIdEvent()}}">Billet</a>
                                 </td>

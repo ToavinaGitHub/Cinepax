@@ -1,8 +1,10 @@
-    NumSeance,Film,Categorie,Salle,Date,Heure
-    10,Piege de cristal,Action,Salle 4,29/02/24,23:00:00
-    14,Piege de cristal,Action,Salle 4,01/03/24,15:30:00
-    11,Piege de cristal,Action,Salle 4,02/03/24,10:30:00
-    90,Shrek 2,Animation,Salle 1,03/03/24,10:00:00
-    18,Piege de cristal,Action,Salle 3,02/03/24,19:00:00
-    17,Shrek 2,Animation,Salle 2,03/03/24,10:00:00
-    21,Hot Shot,Comedie,Salle 1,01/02/24,21:00:00
+NumSeance,Film,Categorie,Salle,Date,Heure
+10,Piege de cristal,Action,Salle 4,29/02/24,23:00:00
+14,Piege de cristal,Action,Salle 4,01/03/24,15:30:00
+11,Piege de cristal,Action,Salle 4,24/03/24,10:30:00
+90,Shrek 2,Animation,Salle 1,03/03/24,10:00:00
+18,Piege de cristal,Action,Salle 3,02/03/24,19:00:00
+17,Shrek 2,Animation,Salle 2,03/03/2024,10:00:00
+21,Hot Shot,Comedie,Salle 1,01/02/24,21:00:00
+89,Malok'ila,Action,Salle 4,2023-03-04,08:00:00
+69,Kung fu panda 4,Famille,Salle 4,2024-02-30,08:30:00

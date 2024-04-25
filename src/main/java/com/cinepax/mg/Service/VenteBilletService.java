@@ -3,12 +3,14 @@ package com.cinepax.mg.Service;
 import com.cinepax.mg.Model.*;
 import com.cinepax.mg.Repository.DataCsvRepository;
 import com.cinepax.mg.Repository.VenteBilletRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +24,21 @@ public class VenteBilletService {
 
     @Autowired
     DataCsvRepository dataCsvRepository;
+
+
+    public static Date parseDate(String dateString) throws ParseException {
+        String[] formats = {"yyyy-MM-dd", "yyyy/MM/dd","dd/MM/yyyy", "dd-MM-yyyy"};
+        for (String format : formats) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+                return sdf.parse(dateString);
+            } catch (ParseException e) {
+                continue;
+            }
+        }
+        throw new ParseException("Format de date invalide", 0);
+    }
 
     public String[] insertAllData(MultipartFile file) throws Exception {
         String[] mess = new String[2];
@@ -49,11 +66,30 @@ public class VenteBilletService {
                 String nomSalle = data[3];
                 String daty = data[4];
                 String lera = data[5];
-
+                Date date = null;
                 try{
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
-                    format.setLenient(false);
-                    Date date = format.parse(daty);
+                    String[] formats = {"yyyy-MM-dd", "dd/MM/yy"};
+                    int count = 0;
+                    //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+                    for (String format : formats) {
+                        SimpleDateFormat sdf = new SimpleDateFormat(format);
+                        sdf.setLenient(false);
+                        try {
+                            date = sdf.parse(daty);
+                            break;
+                        }catch (Exception p){
+                            count++;
+                            continue;
+                        }
+                    }
+                    if(count==formats.length){
+                        messError+="Format Date  Ligne : "+ligne;
+                        ligne+=1;
+                        continue;
+                    }
+
+                    //format.setLenient(false);
+                    //Date date = format.parse(daty);
 
                     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                     LocalTime time = LocalTime.parse(lera, timeFormatter);
