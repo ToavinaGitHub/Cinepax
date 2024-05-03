@@ -1,6 +1,7 @@
 package com.cinepax.mg.Controller;
 
 import com.cinepax.mg.Exception.ValeurInvalideException;
+import com.cinepax.mg.Helper.ExcelHelper;
 import com.cinepax.mg.Service.VenteBilletService;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -65,7 +66,10 @@ public class VenteBilletController {
 
     @Autowired
     ServletContext servletContext;
+
+
     private final TemplateEngine templateEngine;
+
     public VenteBilletController(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
@@ -151,12 +155,14 @@ public class VenteBilletController {
         return "Statistique/statParFilm";
     }
 
+
     @GetMapping("/pdf")
     public void toPdf(@RequestParam("idDetails") String idDetails,HttpServletRequest request, HttpServletResponse response,RedirectAttributes redirectAttributes,Model model) throws IOException {
         DetailsVenteBillet d = detailsVenteBilletRepository.findById(idDetails).get();
 
         Context context = new Context();
         context.setVariable("det", d);
+
         String orderHtml = templateEngine.process("VenteBillet/detailsPdf", context);
 
         ConverterProperties converterProperties = new ConverterProperties();
@@ -254,6 +260,7 @@ public class VenteBilletController {
             String[] mess = venteBilletService.insertAllData(file);
             redirectAttributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
             if(!mess[1].equals(" ")){
+
                 redirectAttributes.addFlashAttribute("error" , mess[1]);
             }
             return "redirect:/v1/accueil";
@@ -262,4 +269,29 @@ public class VenteBilletController {
         }
         return "redirect:/v1/accueil";
     }
+
+    @PostMapping("/importXls")
+    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attributes) {
+        String message = "";
+        if (ExcelHelper.hasExcelFormat(file)) {
+            try {
+                String[] mess=venteBilletService.excelToDataCsv(file.getInputStream());
+
+                attributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
+                if(!mess[1].equals(" ")){
+                    attributes.addFlashAttribute("error" , mess[1]);
+                }
+                return "redirect:/v1/accueil";
+            } catch (Exception e) {
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!"+e.getMessage();
+                attributes.addFlashAttribute("error",message);
+                return "redirect:/v1/accueil";
+            }
+        }
+        message = "Please upload an excel file!";
+        attributes.addFlashAttribute("error",message);
+        return "redirect:/v1/accueil";
+    }
+
+
 }

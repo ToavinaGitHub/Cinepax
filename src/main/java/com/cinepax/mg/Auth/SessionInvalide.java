@@ -26,6 +26,13 @@ public class SessionInvalide extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         boolean isAllowedURI = isAllowedURI(requestURI);
 
+        if(!requestURI.startsWith("/v1")){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+
         if (!isAllowedURI) {
 
             HttpSession session = request.getSession(false);

@@ -34,10 +34,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <form th:action="@{'/v1/venteBillet/csv'}" method="post" id="searchForm" enctype="multipart/form-data">
+                        <form th:action="@{'/v1/venteBillet/importXls'}" method="post" id="searchForm" enctype="multipart/form-data">
                             <div class="col-md-3 input-group mt-2">
                                 <div class="form-control">
-                                    <label class="form-control-sm" for="csv">Import CSV:</label>
+                                    <label class="form-control-sm" for="csv">Import Xlsx:</label>
                                     <input type="file" name="file" class="form-control-sm" id="csv">
                                     <input  class="btn btn-outline-primary" type="submit" value="OK">
                                 </div>
