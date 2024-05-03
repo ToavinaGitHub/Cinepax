@@ -1,20 +1,30 @@
 package com.cinepax.mg.Service;
 
+import com.cinepax.mg.Exception.ValeurInvalideException;
 import com.cinepax.mg.Model.*;
 import com.cinepax.mg.Repository.DataCsvRepository;
 import com.cinepax.mg.Repository.VenteBilletRepository;
 import jakarta.transaction.Transactional;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class VenteBilletService {
@@ -24,7 +34,6 @@ public class VenteBilletService {
 
     @Autowired
     DataCsvRepository dataCsvRepository;
-
 
     public static Date parseDate(String dateString) throws ParseException {
         String[] formats = {"yyyy-MM-dd", "yyyy/MM/dd","dd/MM/yyyy", "dd-MM-yyyy"};
@@ -87,7 +96,6 @@ public class VenteBilletService {
                         ligne+=1;
                         continue;
                     }
-
                     //format.setLenient(false);
                     //Date date = format.parse(daty);
 
@@ -115,7 +123,122 @@ public class VenteBilletService {
 
         mess[0] = Integer.toString(nombreTafiditra);
         mess[1] = messError;
+
+        if(!mess[1].equals(" ")){
+            dataCsvRepository.deleteAll();
+        }else{
+            // Insertion dans chaque table
+
+            dataCsvRepository.deleteAll();
+        }
         return mess;
+    }
+
+    public  String[] excelToDataCsv(InputStream is) {
+        String SHEET = "dataCsv";
+        String[] mess = new String[2];
+        int nombreTafiditra = 0;
+        String messError = " ";
+        int ligne = 1;
+        try {
+            Workbook workbook = new XSSFWorkbook(is);
+
+            Sheet sheet = workbook.getSheet(SHEET);
+
+            Iterator<Row> rows = sheet.iterator();
+
+            int rowNumber = 0;
+            while (rows.hasNext()) {
+                Row currentRow = rows.next();
+                // skip header
+                if (rowNumber == 0) {
+                    rowNumber++;
+                    continue;
+                }
+
+                Iterator<Cell> cellsInRow = currentRow.iterator();
+
+                try{
+                    DataCsv d = new DataCsv();
+                    int cellIdx = 0;
+                    while (cellsInRow.hasNext()) {
+                        Cell currentCell = cellsInRow.next();
+                        Date date = null;
+                        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                        inputFormat.setLenient(false);
+                        switch (cellIdx) {
+                                case 0:
+                                    int temp = (int) currentCell.getNumericCellValue();
+                                    d.setNumSeance(Integer.toString(temp));
+                                    System.out.println(temp+" 0");
+                                    break;
+
+                                case 1:
+                                    d.setFilm(currentCell.getStringCellValue());
+                                    System.out.println(currentCell.getStringCellValue()+" 1");
+                                    break;
+
+                                case 2:
+                                    d.setCategorie(currentCell.getStringCellValue());
+                                    System.out.println(currentCell.getStringCellValue()+" 2");
+                                    break;
+                                case 3:
+                                    d.setSalle(currentCell.getStringCellValue());
+                                    System.out.println(currentCell.getStringCellValue()+" 3");
+                                    break;
+                                case 4:
+
+                                    try{
+                                        Date daty = currentCell.getDateCellValue();
+                                        Date dat = inputFormat.parse(daty.toString());
+                                        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                        outputFormat.setLenient(false);
+                                        String formattedDateStr = outputFormat.format(dat);
+                                        Date formattedDate = outputFormat.parse(formattedDateStr);
+                                        d.setDaty(formattedDate);
+                                    }catch (Exception e){
+                                        messError+="Blem daty Ligne : "+ligne;
+                                    }
+
+                                    break;
+                                case 5:
+
+                                    try{
+                                        double timeValue = currentCell.getNumericCellValue();
+                                        LocalTime heureJava = LocalTime.ofSecondOfDay((long) (timeValue * 24 * 60 * 60));
+                                        d.setHeure(heureJava);
+                                    }catch (Exception e){
+                                        messError+="Blem lera Ligne : "+ligne;
+                                    }
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                            cellIdx++;
+                    }
+                    dataCsvRepository.save(d);
+                    nombreTafiditra+=1;
+
+                }catch (Exception e){
+                    messError+=e.getMessage()+" Ligne : "+ligne;
+                }
+                ligne+=1;
+            }
+            workbook.close();
+            mess[0] = Integer.toString(nombreTafiditra);
+            mess[1] = messError;
+
+            /*if(!mess[1].equals(" ")){
+                dataCsvRepository.deleteAll();
+            }else{
+                // Insertion dans chaque table
+                dataCsvRepository.deleteAll();
+            }*/
+            return mess;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
+        }
     }
 
 }
