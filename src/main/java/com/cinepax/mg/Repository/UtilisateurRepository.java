@@ -12,6 +12,7 @@ public interface UtilisateurRepository extends CrudRepository<Utilisateur, Strin
 
     public Utilisateur findUtilisateurByEmailAndPassword(String email,String password);
 
+    public Utilisateur findUtilisateurByEmail(String email);
 
 
 
