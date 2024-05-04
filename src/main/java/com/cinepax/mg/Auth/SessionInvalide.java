@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
+//@Component
 public class SessionInvalide extends OncePerRequestFilter {
     private static final String LOGIN_URL = "/";
     private static final String SIMPLE_USER_PAGE = "/v1/accueil";
@@ -30,8 +30,6 @@ public class SessionInvalide extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-
 
         if (!isAllowedURI) {
 

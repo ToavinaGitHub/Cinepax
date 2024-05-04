@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Oopss,error 403 ')}"></head>
+<body>
+<main>
+    <div class="container">
+        <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <h1>403</h1>
+            <h2>Vous n'avez pas acces  à cette page.</h2>
+        </section>
+    </div>
+</main>
+</body>
+<div th:replace="~{fragments/script :: script}"></div>
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+</html>
