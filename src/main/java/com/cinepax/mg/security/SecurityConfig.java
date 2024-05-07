@@ -25,15 +25,16 @@ public class SecurityConfig {
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
-
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
                 .authorizeHttpRequests(
                         auth -> {
-                            auth.requestMatchers("/" ,"/login" ,"/vendor/**" ,"/css/**","/img/**","/jquery/**","/js/**","/parsley/**","/scss/**").permitAll();
-                            auth.requestMatchers("/v1/venteBillet/statParFilm").hasRole("SUPERUSER");
+                            auth.requestMatchers("/" ,"/login" ,"/error/403" ,"/vendor/**" ,"/css/**","/img/**","/jquery/**","/js/**","/parsley/**","/scss/**").permitAll();
+                            auth.requestMatchers("/v1/venteBillet/statParFilm" ).hasRole("SUPERUSER");
+
                             /*auth.requestMatchers("/rh").hasRole("RH");
                             auth.requestMatchers("/service").hasRole("SERVICE");
                             auth.requestMatchers("/user").hasRole("USER");*/
@@ -43,15 +44,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and()
-                /*.formLogin(
-                        form -> {
-                            form.loginPage("/");
-                            form.defaultSuccessUrl("/v1/accueil", true);
-                            form.failureUrl("/");
-                            form.usernameParameter("email");
-                            form.passwordParameter("password");
-                        }
-                )*/
+
                 .build();
     }
 

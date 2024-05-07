@@ -41,19 +41,29 @@ public class EventController {
     SalleRepository salleRepository;
 
     @GetMapping("")
-    public String index(Model model , @RequestParam(name = "keyword" ,required = false) String key,
-      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size) throws ParseException {
+    public String index(Model model , @RequestParam(name = "keyword" ,required = false ,defaultValue ="") String key,
+      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size , @RequestParam(defaultValue = "-1" ,name = "tri") int tri) throws ParseException {
         List<Event> events = new ArrayList<Event>();
 
         Pageable pageable =PageRequest.of(page-1,size);
 
         Page<Event> pageCateg;
-        if(key==null){
-            pageCateg = eventRepository.findEventByEtat(1,pageable);
-        }else{
+
+        if(key.compareTo("")==0){
+            if(tri==-1){
+                pageCateg = eventRepository.findEventByEtatOrderByPrixAsc(1,pageable);
+            }else{
+                pageCateg = eventRepository.findEventByEtatOrderByPrixDesc(1,pageable);
+            }
+        }else {
             SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
             Date d = s.parse(key);
-            pageCateg =  eventRepository.getByDate(d,1,pageable);
+            if (tri==-1){
+                pageCateg =  eventRepository.getByDateAsc(d,1,pageable);
+            }else {
+                pageCateg =  eventRepository.getByDateDesc(d,1,pageable);
+            }
+
         }
 
         Event c = new Event();

@@ -64,10 +64,14 @@ public class UtilisateurController {
 		Authentication authentication = authenticationManager.authenticate(authRequest);
 		SecurityContext sc = SecurityContextHolder.getContext();
 		sc.setAuthentication(authentication);
+
+
 		HttpSession s = request.getSession(true);
 		session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
 
+
 		session.setAttribute("user" , user);
+
 		return "redirect:/v1/accueil";
 	}
 
@@ -83,5 +87,9 @@ public class UtilisateurController {
 	@GetMapping("/error/403")
 	public String error403(){
 		return "Auth/403Error";
+	}
+	@GetMapping("/error/404")
+	public String error404(){
+		return "Auth/404Error";
 	}
 }

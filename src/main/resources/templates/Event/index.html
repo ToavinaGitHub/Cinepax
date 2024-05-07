@@ -67,25 +67,29 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-
                         <!-- Recherche par mot clé-->
                         <form th:action="@{'/v1/event'}" method="get" id="searchForm">
                             <div class="col-md-3 input-group mt-2">
                                 <div class="form-control">
                                     <input  class="form-control-sm" placeholder="yyyy-mm-dd"  type="date" name="keyword" th:value="${keyword}" data-parsley-pattern="^\d{4}-\d{2}-\d{2}$" data-parsley-trigger="change">
                                     <!-- Filtrage de nombre de donnée-->
-
                                     <label class="form-control-sm" for="pageSize">Donnee par page:</label>
                                     <select class="form-control-sm" form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
                                             id="pageSize">
                                         <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
                                     </select>
-
+                                    <label class="form-control-sm" for="tri">Trier prix event</label>
+                                    <select class="form-control-sm" id="tri" name="tri">
+                                        <option th:value="-1">Trier Ascendant</option>
+                                        <option th:value="1">Trier Descendant</option>
+                                    </select>
                                     <input  class="btn btn-outline-primary" type="submit" value="Search">
                                 </div>
                             </div>
                             <!-- Filtrage de nombre de donnée-->
                         </form>
+
+
                         <!-- Fin Recherche par mot clé-->
                     </div>
                     <div class="card-body">
