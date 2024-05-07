@@ -1,0 +1,69 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(title='Tests')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header(title='Cinepax')}"></header>
+<aside th:replace="~{fragments/aside :: aside}"></aside>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Test</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Test</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+        <!-- Affichage message-->
+        <div th:replace="~{fragments/message :: MessageAlert}"></div>
+        <!-- Fin Affichage message-->
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class=" card-body">
+                        <div class="card-title">Test tous les champs</div>
+                        <form class="row g-3" method="post" th:action="@{'/v1/test/save'}"  enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <label for="inputName5" class="form-label">Milay?</label>
+                                <input type="checkbox" name="caractere" th:value="1" id="inputName5">
+                                <label for="inputName" class="form-label">Mahay?</label>
+                                <input type="checkbox" name="caractere" th:value="2" id="inputName">
+
+                                <label for="inputLabel" class="form-label">Revena?</label>
+                                <input type="radio" name="idRevena" id="inputLabel">
+
+                                <label for="desc" class="form-label">Description</label>
+                                <textarea name="desc" id="desc"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/script :: script}"></div>
+<!--delete modal -->
+<div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+<!-- fin delete modal -->
+<script>
+    $(document).ready(function() {
+        $('#formValidation').parsley();
+    });
+
+</script>
+
+</html>

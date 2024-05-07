@@ -105,14 +105,13 @@ public class FilmController {
             }
 
             film.setEtat(1);
-           // filmRepository.save(film);
+            filmRepository.save(film);
             redirectAttributes.addFlashAttribute("success", "Film ajoutée avec succès");
             redirectAttributes.addFlashAttribute("message" , "Insertion avec succes");
         }catch(Exception e){
             redirectAttributes.addFlashAttribute("error", "Transaction echouée : "+e.getMessage()
             );
         }
-
         return "redirect:/v1/film";
     }
     @GetMapping("/{id}")

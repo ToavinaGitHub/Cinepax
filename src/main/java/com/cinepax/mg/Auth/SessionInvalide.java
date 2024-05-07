@@ -15,15 +15,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 //@Component
 public class SessionInvalide extends OncePerRequestFilter {
-    private static final String LOGIN_URL = "/";
+    /*private static final String LOGIN_URL = "/";
     private static final String SIMPLE_USER_PAGE = "/v1/accueil";
     private static final List<String> ALLOWED_URIS= Arrays.asList( "/", "/login" );
     public static final List<String> SUPER_USER_ALLOWED_URIS = Arrays.asList("/v1/event" , "/v1/chiffreAffaire/journalier");
 
+    */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String requestURI = request.getRequestURI();
+       /* String requestURI = request.getRequestURI();
         boolean isAllowedURI = isAllowedURI(requestURI);
 
         if(!requestURI.startsWith("/v1")){
@@ -44,11 +45,19 @@ public class SessionInvalide extends OncePerRequestFilter {
                 response.sendRedirect(request.getContextPath() + SIMPLE_USER_PAGE);
                 return;
             }
+        }*/
+
+        System.out.println("haha1");
+
+        if (request.getServletContext().getResource(request.getRequestURI()) == null) {
+            response.sendRedirect(request.getContextPath()+"/error/404");
+            System.out.println(request.getRequestURI());
+            return;
         }
 
         filterChain.doFilter(request, response);
     }
-
+/*
     private boolean isAllowedURI(String requestURI) {
         return ALLOWED_URIS.contains(requestURI);
     }
@@ -63,5 +72,8 @@ public class SessionInvalide extends OncePerRequestFilter {
     private void redirectToLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect(request.getContextPath() + LOGIN_URL);
     }
+
+
+ */
 
 }

@@ -34,6 +34,8 @@ public class AccueilController {
     @Autowired
     ContentService contentService;
 
+
+
     @GetMapping("")
     public String index(@RequestParam(name = "lang",required = false,defaultValue = "fr") String lang, HttpSession session, Model model) throws IOException {
         HashMap<String,String> allLanguage = contentService.getContentByLanguage(lang);

@@ -15,11 +15,16 @@ import java.util.List;
 
 public interface EventRepository extends CrudRepository<Event, String> , JpaRepository<Event, String> {
 
-    @Query("SELECT t FROM Event t WHERE DATE(t.date) = DATE(?1) and t.etat= ?2")
-    Page<Event> getByDate(Date key,int etat, Pageable pageable);
+    @Query("SELECT t FROM Event t WHERE DATE(t.date) = DATE(?1) and t.etat= ?2 ORDER BY t.prix ASC ")
+    Page<Event> getByDateAsc(Date key,int etat, Pageable pageable);
+
+    @Query("SELECT t FROM Event t WHERE DATE(t.date) = DATE(?1) and t.etat= ?2 ORDER BY t.prix DESC ")
+    Page<Event> getByDateDesc(Date key,int etat, Pageable pageable);
 
 
-    Page<Event> findEventByEtat(int etat,Pageable p);
+    Page<Event> findEventByEtatOrderByPrixAsc(int etat,Pageable p);
+
+    Page<Event> findEventByEtatOrderByPrixDesc(int etat,Pageable p);
 
     public List<Event> findEventByEtat(int etat);
 
