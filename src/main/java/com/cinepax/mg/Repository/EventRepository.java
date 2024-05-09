@@ -22,6 +22,8 @@ public interface EventRepository extends CrudRepository<Event, String> , JpaRepo
     Page<Event> getByDateDesc(Date key,int etat, Pageable pageable);
 
 
+
+
     Page<Event> findEventByEtatOrderByPrixAsc(int etat,Pageable p);
 
     Page<Event> findEventByEtatOrderByPrixDesc(int etat,Pageable p);

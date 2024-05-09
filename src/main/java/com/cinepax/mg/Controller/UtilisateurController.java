@@ -75,7 +75,7 @@ public class UtilisateurController {
 		return "redirect:/v1/accueil";
 	}
 
-	@GetMapping("/logout")
+	@GetMapping("/deco")
 	public String logout(HttpSession session,RedirectAttributes redirectAttributes,HttpServletRequest request){
 		session.removeAttribute("user");
 		HttpSession s = request.getSession(true);

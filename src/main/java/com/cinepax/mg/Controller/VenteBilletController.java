@@ -16,6 +16,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -67,6 +69,10 @@ public class VenteBilletController {
     @Autowired
     ServletContext servletContext;
 
+
+    public static int tempTableProgress = 0;
+    public static int targetTableProgress = 0;
+    public static int totalLines = 0;
 
     private final TemplateEngine templateEngine;
 
@@ -254,20 +260,67 @@ public class VenteBilletController {
         redirectAttributes.addFlashAttribute("message" , "Importation avec succes");
         return "redirect:/v1/venteBillet";
     }*/
+
     @PostMapping("/csv")
-    public String fromCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
+    public ResponseEntity<Map<String, String>> fromCsv(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes) {
+        Map<String, String> responseData = new HashMap<>();
+
         try {
+            VenteBilletController.tempTableProgress=0;
+            VenteBilletController.targetTableProgress=0;
+
             String[] mess = venteBilletService.insertAllData(file);
+
+            System.out.println("jajaja");
+            redirectAttributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
+            responseData.put("message",mess[0]+"peuvent etre insérer ");
+            if(!mess[1].equals(" ")){
+                System.out.println("jajaja2");
+                redirectAttributes.addFlashAttribute("error" , mess[1]);
+                responseData.put("error", mess[1]);
+            }
+
+            responseData.put("redirect", "/v1/accueil"); // Redirection vers la page d'accueil
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Erreur d'importation : " + e.getMessage());
+            responseData.put("error" ,"Erreur d'importation : " + e.getMessage());
+            responseData.put("redirect", "/v1/accueil"); // Redirection vers la page d'accueil
+        }
+
+        return ResponseEntity.ok(responseData);
+    }
+
+    /*@PostMapping("/csv")
+    public String fromCsv(@RequestParam("file")MultipartFile file,RedirectAttributes redirectAttributes){
+
+        try {
+            VenteBilletController.tempTableProgress=0;
+            VenteBilletController.targetTableProgress=0;
+
+            String[] mess = venteBilletService.insertAllData(file);
+
+            System.out.println("jajaja");
             redirectAttributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
             if(!mess[1].equals(" ")){
-
+                System.out.println("jajaja2");
                 redirectAttributes.addFlashAttribute("error" , mess[1]);
             }
+            System.out.println("jajaja3");
             return "redirect:/v1/accueil";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error" , "Erreur d'importation");
         }
         return "redirect:/v1/accueil";
+    }*/
+
+    @RequestMapping("/progress")
+    @ResponseBody
+    public int getProgress() {
+        // Calculer le progrès total (tempTableProgress + targetTableProgress)
+        double tempTableProgressPercent = ((double) tempTableProgress / totalLines) * 100;
+        double targetTableProgressPercent = ((double) targetTableProgress / totalLines) * 100;
+        double totalProgressPercent = (tempTableProgressPercent + targetTableProgressPercent) / 2;
+        return (int) totalProgressPercent;
     }
 
     @PostMapping("/importXls")

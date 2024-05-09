@@ -439,3 +439,6 @@ SELECT key ,
 SELECT * from utilisateur where email='toavina' and password='haha' OR 1=1;
 
 
+DELETE FROM data_csv WHERE 1=1;
+
+

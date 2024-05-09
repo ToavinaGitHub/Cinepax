@@ -30,6 +30,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
+                .csrf().disable()
                 .authorizeHttpRequests(
                         auth -> {
                             auth.requestMatchers("/" ,"/login" ,"/error/403" ,"/vendor/**" ,"/css/**","/img/**","/jquery/**","/js/**","/parsley/**","/scss/**").permitAll();
@@ -38,13 +39,13 @@ public class SecurityConfig {
                             /*auth.requestMatchers("/rh").hasRole("RH");
                             auth.requestMatchers("/service").hasRole("SERVICE");
                             auth.requestMatchers("/user").hasRole("USER");*/
+
                             auth.anyRequest().authenticated();
                             //auth.anyRequest().permitAll();
                         }
                 )
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and()
-
                 .build();
     }
 

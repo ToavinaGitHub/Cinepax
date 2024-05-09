@@ -21,6 +21,16 @@
     <section class="section">
         <!-- Affichage message-->
         <div th:replace="~{fragments/message :: MessageAlert}"></div>
+
+        <div style="display: none"   class="alert alert-success alert-dismissible fade show text-center message"
+             role="alert" id="succ">
+
+        </div>
+        <div  style="display: none" class="alert alert-danger alert-dismissible fade show text-center message"
+             role="alert" id="err">
+
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -43,6 +53,25 @@
                                 </div>
                             </div>
                         </form>
+
+                        <form method="post" id="importCsv" enctype="multipart/form-data">
+                            <div class="col-md-3 input-group mt-2">
+                                <div class="form-control">
+                                    <label class="form-control-sm" for="csv2">Import csv:</label>
+                                    <input type="file" name="file" class="form-control-sm" id="csv2">
+                                    <input  class="btn btn-outline-primary" type="submit" value="OK">
+                                </div>
+                            </div>
+                        </form>
+                        <div id="progressContainer" style="display: none;">
+                            <div class="progress">
+                                <div id="progressBar" class="progress-bar progress-bar-striped" role="progressbar"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <span id="progressText"></span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class=" card-body">
                         <h5 class="card-title" >Evenements a venir</h5>
@@ -83,8 +112,95 @@
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 <div th:replace="~{fragments/script :: script}"></div>
+
 <!--delete modal -->
 <div th:replace="~{fragments/DeleteConfirmation :: Delete}"></div>
+
+<script src="/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        var run = true
+
+        $('#importCsv').submit(function(e) {
+            e.preventDefault();
+            run = true;
+            var pr = $('#progressContainer');
+            pr.hide();
+            var formData = new FormData(this);
+            pr.show();
+
+            $('#progressBar').css('width', '0%').attr('aria-valuenow', 0);
+            $('#progressText').text('0%');
+
+            var err = document.getElementById("err");
+            err.style.display = "none";
+            err.textContent = "";
+
+            var succ = document.getElementById("succ");
+            succ.style.display = "none";
+            succ.textContent = "";
+
+            updateProgressBar();
+            $.ajax({
+                url: '/v1/venteBillet/csv',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+
+                    /*if (response.redirect) {
+                        window.location.href = response.redirect;
+                        return; // Arrêtez l'exécution de la fonction après la redirection
+                    }*/
+
+                    console.log(response)
+                    console.log("Traitement démarré "+response.error+" -- "+response.message);
+                    if(response.error){
+                        run = false
+                        var err = document.getElementById("err");
+                        err.style.display = "block";
+                        err.textContent = response.error;
+                    }
+                    var succ = document.getElementById("succ");
+                    succ.style.display = "block";
+                    succ.textContent = response.message;
+
+
+                    //updateProgressBar();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors de l'envoi du fichier CSV :", error);
+                }
+            });
+        });
+
+        function updateProgressBar() {
+            $.ajax({
+                url: '/v1/venteBillet/progress',
+                type: 'GET',
+                success: function(progress) {
+                    console.log(progress + " haha");
+                    $('#progressBar').css('width', progress + '%' ).attr('aria-valuenow', progress);
+                    $('#progressText').text(progress.toFixed(2) + '%');
+
+                    console.log(run)
+                    if (progress < 100 && run===true) {
+                        // Appel récursif pour mettre à jour la progression
+                        setTimeout(updateProgressBar, 1000);
+                    }
+                }
+            });
+        }
+
+    });
+</script>
+
+
+
+
+
 <!-- fin delete modal -->
 <script>
     $(document).ready(function() {
