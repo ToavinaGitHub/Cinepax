@@ -18,13 +18,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        System.out.println("ato1");
-
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-
-
-        System.out.println(response.getStatus()+" haha");
         int error = 404;
 
         if (accessDeniedException instanceof AccessDeniedException) {

@@ -42,7 +42,7 @@ public class EventController {
 
     @GetMapping("")
     public String index(Model model , @RequestParam(name = "keyword" ,required = false ,defaultValue ="") String key,
-      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size , @RequestParam(defaultValue = "-1" ,name = "tri") int tri) throws ParseException {
+      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size , @RequestParam(defaultValue = "-1" ,name = "tri") int tri ) throws ParseException {
         List<Event> events = new ArrayList<Event>();
 
         Pageable pageable =PageRequest.of(page-1,size);
@@ -97,6 +97,8 @@ public class EventController {
             return "redirect:/v1/event";
         }
         try{
+
+
             event.setEtat(1);
             String dateTimeString = event.getDate()+" "+lera;
             System.out.println(dateTimeString);

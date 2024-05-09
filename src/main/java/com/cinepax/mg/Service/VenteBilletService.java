@@ -1,5 +1,6 @@
 package com.cinepax.mg.Service;
 
+import com.cinepax.mg.Controller.VenteBilletController;
 import com.cinepax.mg.Exception.ValeurInvalideException;
 import com.cinepax.mg.Model.*;
 import com.cinepax.mg.Repository.DataCsvRepository;
@@ -40,7 +41,6 @@ public class VenteBilletService {
         for (String format : formats) {
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
-
                 return sdf.parse(dateString);
             } catch (ParseException e) {
                 continue;
@@ -49,8 +49,26 @@ public class VenteBilletService {
         throw new ParseException("Format de date invalide", 0);
     }
 
+
+    public static int countLines(MultipartFile file) {
+        int lines = 0;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            while (reader.readLine() != null) {
+                lines++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+
     public String[] insertAllData(MultipartFile file) throws Exception {
         String[] mess = new String[2];
+
+        VenteBilletController.totalLines = countLines(file)-1;
+
+        System.out.println(VenteBilletController.totalLines);
         int nombreTafiditra = 0;
         String messError = " ";
         if (file.isEmpty()) {
@@ -67,16 +85,18 @@ public class VenteBilletService {
 
                     continue;
                 }
-                String[] data = line.split(",");
 
-                String numSeance = data[0];
-                String titreFilm = data[1];
-                String genreFilm = data[2];
-                String nomSalle = data[3];
-                String daty = data[4];
-                String lera = data[5];
-                Date date = null;
                 try{
+
+                    String[] data = line.split(",");
+
+                    String numSeance = data[0];
+                    String titreFilm = data[1];
+                    String genreFilm = data[2];
+                    String nomSalle = data[3];
+                    String daty = data[4];
+                    String lera = data[5];
+                    Date date = null;
                     String[] formats = {"yyyy-MM-dd", "dd/MM/yy"};
                     int count = 0;
                     //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
@@ -92,7 +112,7 @@ public class VenteBilletService {
                         }
                     }
                     if(count==formats.length){
-                        messError+="Format Date  Ligne : "+ligne;
+                        messError+="Format Date "+daty+" Ligne : "+ligne+" ---- ";
                         ligne+=1;
                         continue;
                     }
@@ -112,12 +132,15 @@ public class VenteBilletService {
 
                     nombreTafiditra+=1;
                     dataCsvRepository.save(d);
-                   }catch (Exception e){
-                    messError+=e.getMessage()+" Ligne : "+ligne;
+                    VenteBilletController.tempTableProgress+=1;
+                    //Thread.sleep(100);
+                }catch (Exception e){
+                    messError+=e.getMessage()+" Ligne : "+ligne+" ---- ";
                 }
                 ligne++;
             }
         }catch (Exception e){
+            e.printStackTrace();
             messError+=e.getMessage();
         }
 
@@ -129,7 +152,13 @@ public class VenteBilletService {
         }else{
             // Insertion dans chaque table
 
-            dataCsvRepository.deleteAll();
+            venteBilletRepository.insertGenreByCsv();
+
+            /*for(int i=0;i<VenteBilletController.totalLines;i++){
+                VenteBilletController.targetTableProgress+=1;
+            }*/
+            VenteBilletController.targetTableProgress=VenteBilletController.totalLines;
+           // dataCsvRepository.deleteAll();
         }
         return mess;
     }
