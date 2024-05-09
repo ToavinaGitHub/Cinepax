@@ -2,6 +2,7 @@ package com.cinepax.mg.Controller;
 
 import com.cinepax.mg.Model.GenreFilm;
 import com.cinepax.mg.Repository.GenreFilmRepository;
+import com.cinepax.mg.Service.FilmService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -37,20 +38,24 @@ public class FilmController {
     private FilmRepository  filmRepository;
 
     @Autowired
+    FilmService filmService;
+
+    @Autowired
     GenreFilmRepository genreFilmRepository;
 
     @GetMapping("")
-    public String index(Model model , @RequestParam(name = "keyword" ,required = false) String key,
+    public String index(Model model , @RequestParam(name = "keyword" ,required = false,defaultValue = "") String key,
       @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size)  {
         List<Film> films = new ArrayList<Film>();
 
         Pageable pageable =PageRequest.of(page-1,size);
 
         Page<Film> pageCateg;
-        if(key==null){
+        if(key.compareTo("")==0){
             pageCateg = filmRepository.findFilmByEtat(1,pageable);
         }else{
-            pageCateg =  filmRepository.findFilmByEtatAndTitreContainingIgnoreCase(1,key,pageable);
+            pageCateg = filmService.rechercheMultiMot(key,pageable);
+            //pageCateg =  filmRepository.findFilmByEtatAndTitreContainingIgnoreCase(1,key,pageable);
         }
 
         Film c = new Film();

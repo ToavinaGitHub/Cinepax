@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public interface FilmRepository extends CrudRepository<Film, String> , JpaReposi
 
 
     public Film findFilmByEtatAndTitreIgnoreCase(int etat,String titre);
+
+    @Query("SELECT e FROM Film e WHERE e.etat=1 and LOWER(e.description) LIKE %:motCle% OR LOWER(e.genreFilm.libelle) LIKE %:motCle% OR LOWER(e.titre) LIKE %:motCle%")
+    Page<Film> rechercheMultiMot(@Param("motCle") String motCle,Pageable pageable);
 
     List<Film> findFilmByEtat(int etat);
 
