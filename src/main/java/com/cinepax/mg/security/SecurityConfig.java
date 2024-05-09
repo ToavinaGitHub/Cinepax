@@ -46,6 +46,8 @@ public class SecurityConfig {
                 )
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and()
+                .formLogin().loginPage("/").permitAll()
+                .and()
                 .build();
     }
 
