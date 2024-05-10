@@ -98,7 +98,6 @@ public class EventController {
         }
         try{
 
-
             event.setEtat(1);
             String dateTimeString = event.getDate()+" "+lera;
             System.out.println(dateTimeString);

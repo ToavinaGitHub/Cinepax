@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +19,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -45,14 +48,28 @@ public class FilmController {
 
     @GetMapping("")
     public String index(Model model , @RequestParam(name = "keyword" ,required = false,defaultValue = "") String key,
-      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "3" , required = false ,name = "size") int size)  {
+      @RequestParam(defaultValue = "1" , required = false ,name = "page") int page, @RequestParam(defaultValue = "9" , required = false ,name = "size") int size,  @RequestParam(defaultValue = "idFilm", required = false, name = "sortField") String sortField,
+                        @RequestParam(defaultValue = "asc", required = false, name = "sortOrder") String sortOrder,
+                        @RequestParam(name = "titre",required = false,defaultValue = "") String titre, @RequestParam(name = "description",required = false,defaultValue = "") String description
+    , @RequestParam(name = "genre",required = false ,defaultValue = "") String genre)  {
+
+
         List<Film> films = new ArrayList<Film>();
 
-        Pageable pageable =PageRequest.of(page-1,size);
+
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Sort sort = Sort.by(direction, sortField);
+
+
+        Pageable pageable =PageRequest.of(page-1,size,sort);
 
         Page<Film> pageCateg;
         if(key.compareTo("")==0){
             pageCateg = filmRepository.findFilmByEtat(1,pageable);
+            if(titre.compareTo("")!=0 || genre.compareTo("")!=0 || description.compareTo("")!=0){
+                pageCateg = filmRepository.searchFilms(titre,description,genre,pageable);
+            }
         }else{
             pageCateg = filmService.rechercheMultiMot(key,pageable);
             //pageCateg =  filmRepository.findFilmByEtatAndTitreContainingIgnoreCase(1,key,pageable);
@@ -65,9 +82,15 @@ public class FilmController {
         List<GenreFilm> genreFilms = genreFilmRepository.findAll();
         model.addAttribute("genres", genreFilms);
 
+        model.addAttribute("titreSearch",titre);
+        model.addAttribute("descriptionSearch",description);
+        model.addAttribute("genreSearch",genre);
+
         model.addAttribute("keyword" , key);
         model.addAttribute("film" , c);
         model.addAttribute("films", films);
+        model.addAttribute("sortField",sortField);
+        model.addAttribute("sortOrder",sortOrder);
 
         model.addAttribute("currentPage", pageCateg.getNumber() + 1);
         model.addAttribute("totalItems", pageCateg.getTotalElements());
@@ -182,5 +205,30 @@ public class FilmController {
         redirectAttributes.addFlashAttribute("message" , "Modification avec succes");
         return "redirect:/v1/film";
     }
+    @GetMapping("/exportCsv")
+    public String exportCSV(RedirectAttributes redirectAttributes) {
+        System.out.println("huhu");
+        List<Film> rows = filmRepository.findAll();
+
+        try (FileWriter csvWriter = new FileWriter("film.csv")) {
+
+            csvWriter.append("Id film,Titre,Genre");
+
+            csvWriter.append("\n");
+
+            // Write data
+            for (Film row : rows) {
+                csvWriter.append(row.getIdFilm()).append(",").append(row.getTitre()).append(",").append(row.getGenreFilm().getLibelle());
+                csvWriter.append("\n");
+            }
+            csvWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        redirectAttributes.addFlashAttribute("message","Exporté avec succes");
+        return "redirect:/v1/film";
+    }
+
 
 }

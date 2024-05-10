@@ -85,11 +85,8 @@ public class VenteBilletService {
 
                     continue;
                 }
-
+                String[] data = line.split(",");
                 try{
-
-                    String[] data = line.split(",");
-
                     String numSeance = data[0];
                     String titreFilm = data[1];
                     String genreFilm = data[2];
@@ -130,12 +127,18 @@ public class VenteBilletService {
                     d.setDaty(date);
                     d.setHeure(time);
 
+
                     nombreTafiditra+=1;
                     dataCsvRepository.save(d);
                     VenteBilletController.tempTableProgress+=1;
-                    //Thread.sleep(100);
+
+                    Thread.sleep(10);
                 }catch (Exception e){
-                    messError+=e.getMessage()+" Ligne : "+ligne+" ---- ";
+                    String tempMess = e.getMessage()+" Ligne : "+ligne+" ---- ";
+                    if(data.length==1){
+                        tempMess = "Ligne vide sur Ligne : "+ligne+" ---- ";
+                    }
+                    messError+=tempMess;
                 }
                 ligne++;
             }

@@ -1,5 +1,5 @@
-<a th:fragment="paging(pageNum, label, tooltip,url)" class="page-link"
-   th:href="@{${url} + '?' + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''} + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+<a th:fragment="paging(pageNum, label, tooltip,url,sortOrder,sortField)" class="page-link"
+   th:href="@{${url} + '?' + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''} + 'page=' + ${pageNum} + '&size=' + ${pageSize} +'&sortField='+${sortField} +'&sortOrder='+${sortOrder}}"
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>

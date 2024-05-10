@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(
                         auth -> {
-                            auth.requestMatchers("/" ,"/login" ,"/error/403" ,"/vendor/**" ,"/css/**","/img/**","/jquery/**","/js/**","/parsley/**","/scss/**").permitAll();
+                            auth.requestMatchers("/" ,"/login","/insc","/inscription" ,"/error/403" ,"/vendor/**" ,"/css/**","/img/**","/jquery/**","/js/**","/parsley/**","/scss/**").permitAll();
                             auth.requestMatchers("/v1/venteBillet/statParFilm" ).hasRole("SUPERUSER");
 
                             /*auth.requestMatchers("/rh").hasRole("RH");

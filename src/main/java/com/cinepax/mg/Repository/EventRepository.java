@@ -2,6 +2,7 @@ package com.cinepax.mg.Repository;
 
 
 import com.cinepax.mg.Model.Event;
+import com.cinepax.mg.Model.Film;
 import com.cinepax.mg.view.V_place_event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +21,6 @@ public interface EventRepository extends CrudRepository<Event, String> , JpaRepo
 
     @Query("SELECT t FROM Event t WHERE DATE(t.date) = DATE(?1) and t.etat= ?2 ORDER BY t.prix DESC ")
     Page<Event> getByDateDesc(Date key,int etat, Pageable pageable);
-
-
-
 
     Page<Event> findEventByEtatOrderByPrixAsc(int etat,Pageable p);
 
@@ -53,4 +51,8 @@ public interface EventRepository extends CrudRepository<Event, String> , JpaRepo
             "(select * from v_temp_2 where id_event=?1) as r2\n" +
             "on r1.id_place_salle=r2.id_place_salle where range= ?2",nativeQuery = true)
     public List<V_place_event> getPlaceEventRange(String idEvent,String range);
+
+
+
+
 }

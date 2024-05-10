@@ -167,6 +167,7 @@ public class VenteBilletController {
         DetailsVenteBillet d = detailsVenteBilletRepository.findById(idDetails).get();
 
         Context context = new Context();
+
         context.setVariable("det", d);
 
         String orderHtml = templateEngine.process("VenteBillet/detailsPdf", context);
@@ -175,7 +176,6 @@ public class VenteBilletController {
         converterProperties.setBaseUri("http://localhost:8080");
 
         /* Convert HTML to PDF */
-
         ByteArrayOutputStream target = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
 
@@ -271,15 +271,15 @@ public class VenteBilletController {
 
             String[] mess = venteBilletService.insertAllData(file);
 
-            System.out.println("jajaja");
             redirectAttributes.addFlashAttribute("message" , mess[0]+" données inséré avec succes");
-            responseData.put("message",mess[0]+"peuvent etre insérer ");
+
             if(!mess[1].equals(" ")){
-                System.out.println("jajaja2");
                 redirectAttributes.addFlashAttribute("error" , mess[1]);
                 responseData.put("error", mess[1]);
+                responseData.put("message",mess[0]+" données peuvent etre insérer ");
+            }else {
+                responseData.put("message",mess[0]+" données sont insérées ");
             }
-
             responseData.put("redirect", "/v1/accueil"); // Redirection vers la page d'accueil
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Erreur d'importation : " + e.getMessage());
