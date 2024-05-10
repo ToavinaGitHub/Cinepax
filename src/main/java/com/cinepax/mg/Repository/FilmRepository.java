@@ -31,6 +31,15 @@ public interface FilmRepository extends CrudRepository<Film, String> , JpaReposi
     @Query(value = "SELECT v.id_film,v.titre,v.montant,v.quantite from v_stats_film v",nativeQuery = true)
     List<V_stats_film> getStatByIdFilm();
 
+    @Query("SELECT f FROM Film f " +
+            "JOIN GenreFilm g ON f.genreFilm.idGenre=g.idGenre " +
+            "WHERE " +
+            "(:titre IS NULL OR :titre = '' OR f.titre LIKE CONCAT('%', :titre, '%')) AND " +
+            "(:description IS NULL OR :description = '' OR f.description LIKE CONCAT('%', :description, '%'))AND " +
+            "(:genre IS NULL OR :genre = '' OR g.libelle LIKE CONCAT('%', :genre ,'%'))")
+    Page<Film> searchFilms(@Param("titre") String titre,
+                           @Param("description") String description,
+                           @Param("genre") String genre , Pageable pageable);
 
 
 }

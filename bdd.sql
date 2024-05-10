@@ -340,6 +340,7 @@ group by d , f.id_film;
 
 SELECT d,id_film,titre,vola from v_montant_film_jour;
 
+
 ----Film les plus vues
 CREATE OR REPLACE view v_film_plus_vues_jour as
 SELECT f.id_film,f.titre, sum(v.nombre) vue
@@ -348,7 +349,9 @@ join event on v.id_event = event.id_event
 join film f on event.id_film = f.id_film
 where v.etat=1
 group by f.id_film
-order by vue desc ;
+order by vue desc;
+
+
 
 SELECT id_film,titre,vue from v_film_plus_vues_jour;
 
@@ -439,6 +442,21 @@ SELECT key ,
 SELECT * from utilisateur where email='toavina' and password='haha' OR 1=1;
 
 
-DELETE FROM data_csv WHERE 1=1;
+delete from data_csv where 1=1;
+
+SELECT salle, count(*) from data_Csv GROUP BY salle HAVING count(*)>=20;
 
 
+SELECT f.* FROM film f
+WHERE
+    (:titre IS NULL OR f.titre LIKE '%' || :titre || '%') AND
+    (:description IS NULL OR f.description LIKE '%' || :description || '%') AND
+    (:genre IS NULL OR f.id_genre_film IN (SELECT id_genre_film FROM genre_film WHERE libelle = :genre));
+
+
+
+SELECT f.* FROM film f
+WHERE
+    ('Haha' IS NULL OR f.titre LIKE '%Imaginar%') AND
+    (f.description IS NULL OR f.description LIKE '%Haha%') AND
+    ('Imaginary' IS NULL OR f.id_genre_film = (SELECT id_genre_film FROM genre_film WHERE libelle = 'Romance'));

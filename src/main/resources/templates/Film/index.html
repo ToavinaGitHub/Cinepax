@@ -67,16 +67,49 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-
                         <!-- Recherche par mot clé-->
                         <form th:replace="~{fragments/KeywordSearch :: Search(url='/v1/film') }">
                         </form>
+                        <a th:href="@{'/v1/film/exportCsv'}"><button class="btn btn-outline-primary">Export Csv</button></a>
                         <!-- Fin Recherche par mot clé-->
+                        <form th:action="@{'/v1/film'}" method="get" >
+                            <div class="col-md-3 input-group mt-2">
+                                <div class="form-control">
+                                    <label class="form-control-sm" for="col">Colonne:</label>
+                                    <select class="form-control-sm" name="sortField" id="col">
+                                        <option value="idFilm">Id</option>
+                                        <option value="titre">Titre</option>
+                                        <option value="description">Description</option>
+                                        <option value="genreFilm.libelle">Genre film</option>
+                                    </select>
+                                    <label class="form-control-sm" for="sortOrder">Sort:</label>
+                                    <select class="form-control-sm"  name="sortOrder" id="sortOrder">
+                                        <option value="asc">Ascendant</option>
+                                        <option value="desc">Descendant</option>
+                                    </select>
+
+                                    <input  class="btn btn-outline-primary" type="submit" value="OK">
+                                </div>
+                            </div>
+                            <!-- Filtrage de nombre de donnée-->
+                        </form>
+
+
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">film data</h5>
                         <table class="table table-striped">
                             <thead>
+                            <form th:action="@{'/v1/film'}" method="get" >
+                            <tr>
+                                <th></th>
+                                <th scope="col"><input  class="form-control-sm" placeholder="Titre" type="text" name="titre" id="titreSearch" th:value="${titreSearch}" ></th>
+                                <th scope="col"><input  class="form-control-sm" placeholder="Description" type="text" name="description" id="descriptionSearch" th:value="${descriptionSearch}" ></th><label class="form-control-sm" for="genreSearch">Genre:</label>
+                                <th></th>
+                                <th scope="col"><input  class="form-control-sm" placeholder="Genre" type="text" name="genre" id="genreSearch" th:value="${genreSearch}" ></th>
+                                <th scope="col"><input  class="btn btn-outline-primary" type="submit" value="OK"></th>
+                            </tr>
+                            </form>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Titre></th>
@@ -103,14 +136,36 @@
                     </div>
                 </div>
             </div>
-
             <!-- Pagination -->
-            <nav th:replace="~{fragments/Pagination :: Pagination('/v1/film')}">
-            </nav>
+            <!-- <nav th:replace="~{fragments/Pagination :: Pagination('/v1/film')}">
+            </nav> -->
             <!-- Fin Pagination -->
-
-
-
+            <nav  aria-label="Pagination" th:if="${totalPages > 0}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page','/v1/film',${sortOrder},${sortField})}"></a>
+                    </li>
+                    <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a th:replace="~{fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page','/v1/film',${sortOrder},${sortField})}"></a>
+                    </li>
+                    <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                        th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                        <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page} ,'/v1/film',${sortOrder},${sortField})}"></a>
+                    </li>
+                    <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page' , '/v1/film',${sortOrder},${sortField})}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page' , '/v1/film',${sortOrder},${sortField})}"></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </section>
 

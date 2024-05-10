@@ -149,13 +149,6 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-
-                    /*if (response.redirect) {
-                        window.location.href = response.redirect;
-                        return; // Arrêtez l'exécution de la fonction après la redirection
-                    }*/
-
-                    console.log(response)
                     console.log("Traitement démarré "+response.error+" -- "+response.message);
                     if(response.error){
                         run = false

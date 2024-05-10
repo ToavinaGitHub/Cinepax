@@ -11,7 +11,41 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
 11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
 12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
-13,The Good the Bad and the Ugly,Western,Salle 1,01/01/24,21:00:00
+13,The Good the Bad and the Ugly,Western,Salle 1,29/01/23,21:76:00
+14,Fight Club,Drame,Salle 2,01/01/24,22:00:00
+15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
+16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
+17,Goodfellas,Crime,Salle 2,02/01/24,10:00:00
+18,The Matrix,Science-Fiction,Salle 3,02/01/24,11:00:00
+19,City of God,Crime,Salle 1,02/01/24,12:00:00
+20,Se7en,Crime,Salle 2,02/01/24,13:00:00
+21,The Silence of the Lambs,Thriller,Salle 3,02/01/24,14:78:00
+22,It's a Wonderful Life,Drame,Salle 1,02/01/24,15:00:00
+23,Star Wars: Episode IV - A New Hope,Science-Fiction,Salle 2,02/01/24,16:00:00
+24,Whiplash,Drame,Salle 3,02/01/24,17:00:00
+25,The Departed,Crime,Salle 1,02/01/24,18:00:00
+26,The Pianist,Drame,Salle 2,02/01/24,19:00:00
+27,Back to the Future,Science-Fiction,Salle 3,02/01/24,20:00:00
+28,Gladiator,Action,Salle 1,02/01/24,21:00:00
+29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
+30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
+497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
+498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
+499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
+500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00
+1,Avatar,Science-Fiction,Salle 1,01/01/24,09:00:00
+2,Inception,Action,Salle 2,01/01/24,10:00:00
+3,Interstellar,Science-Fiction,Salle 3,01/01/24,11:00:00
+4,The Shawshank Redemption,Drame,Salle 1,01/01/24,12:00:00
+5,The Dark Knight,Action,Salle 2,01/01/24,13:00:00
+6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
+7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
+8,Schindler's List,Drame,Salle 2,01/01/24,16:00:00
+9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:00:00
+10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
+11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
+12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
+13,The Good ,the Bad and the Ugly,Western,Salle 1,45/01/24,21:00:00
 14,Fight Club,Drame,Salle 2,01/01/24,22:00:00
 15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
 16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
@@ -211,7 +245,7 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
 7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
 8,Schindler's List,Drame,Salle 2,01/01/24,16:00:00
-9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:00:00
+9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:67:00
 10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
 11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
 12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
@@ -241,6 +275,40 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 2,Inception,Action,Salle 2,01/01/24,10:00:00
 3,Interstellar,Science-Fiction,Salle 3,01/01/24,11:00:00
 4,The Shawshank Redemption,Drame,Salle 1,01/01/24,12:00:00
+5,The Dark Knight,Action,Salle 2,01/01/24,13:00:00
+6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
+7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
+8,Schindler's List,Drame,Salle 2,01/01/24,16:00:00
+9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:00:00
+10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
+11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
+12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
+13,The Good the Bad and the Ugly,Western,Salle 1,01/01/24,21:00:00
+14,Fight Club,Drame,Salle 2,01/01/24,22:00:00
+15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
+16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
+17,Goodfellas,Crime,Salle 2,02/01/24,10:00:00
+18,The Matrix,Science-Fiction,Salle 3,02/01/24,11:00:00
+19,City of God,Crime,Salle 1,02/01/24,12:00:00
+20,Se7en,Crime,Salle 2,02/01/24,13:00:00
+21,The Silence of the Lambs,Thriller,Salle 3,02/01/24,14:00:00
+22,It's a Wonderful Life,Drame,Salle 1,02/01/24,15:00:00
+23,Star Wars: Episode IV - A New Hope,Science-Fiction,Salle 2,02/01/24,16:00:00
+24,Whiplash,Drame,Salle 3,02/01/24,17:00:00
+25,The Departed,Crime,Salle 1,02/01/24,18:00:00
+26,The Pianist,Drame,Salle 2,02/01/24,19:00:00
+27,Back to the Future,Science-Fiction,Salle 3,02/01/24,20:00:00
+28,Gladiator,Action,Salle 1,02/01/24,21:00:00
+29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
+30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
+497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
+498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
+499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
+500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00
+1,Avatar,Science-Fiction,Salle 1,01/01/24,09:00:00
+2,Inception,Action,Salle 2,01/01/24,10:00:00
+3,Interstellar,Science-Fiction,Salle 3,01/01/24,11:00:00
+4,The Shawshank Redemption,Drame,Salle 1,01/01/24,12:00:98
 5,The Dark Knight,Action,Salle 2,01/01/24,13:00:00
 6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
 7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
@@ -356,75 +424,7 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
 16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
 17,Goodfellas,Crime,Salle 2,02/01/24,10:00:00
-18,The Matrix,Science-Fiction,Salle 3,02/01/24,11:00:00
-19,City of God,Crime,Salle 1,02/01/24,12:00:00
-20,Se7en,Crime,Salle 2,02/01/24,13:00:00
-21,The Silence of the Lambs,Thriller,Salle 3,02/01/24,14:00:00
-22,It's a Wonderful Life,Drame,Salle 1,02/01/24,15:00:00
-23,Star Wars: Episode IV - A New Hope,Science-Fiction,Salle 2,02/01/24,16:00:00
-24,Whiplash,Drame,Salle 3,02/01/24,17:00:00
-25,The Departed,Crime,Salle 1,02/01/24,18:00:00
-26,The Pianist,Drame,Salle 2,02/01/24,19:00:00
-27,Back to the Future,Science-Fiction,Salle 3,02/01/24,20:00:00
-28,Gladiator,Action,Salle 1,02/01/24,21:00:00
-29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
-30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
-497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
-498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
-499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
-500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00
-1,Avatar,Science-Fiction,Salle 1,01/01/24,09:00:00
-2,Inception,Action,Salle 2,01/01/24,10:00:00
-3,Interstellar,Science-Fiction,Salle 3,01/01/24,11:00:00
-4,The Shawshank Redemption,Drame,Salle 1,01/01/24,12:00:00
-5,The Dark Knight,Action,Salle 2,01/01/24,13:00:00
-6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
-7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
-8,Schindler's List,Drame,Salle 2,01/01/24,16:00:00
-9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:00:00
-10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
-11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
-12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
-13,The Good the Bad and the Ugly,Western,Salle 1,01/01/24,21:00:00
-14,Fight Club,Drame,Salle 2,01/01/24,22:00:00
-15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
-16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
-17,Goodfellas,Crime,Salle 2,02/01/24,10:00:00
-18,The Matrix,Science-Fiction,Salle 3,02/01/24,11:00:00
-19,City of God,Crime,Salle 1,02/01/24,12:00:00
-20,Se7en,Crime,Salle 2,02/01/24,13:00:00
-21,The Silence of the Lambs,Thriller,Salle 3,02/01/24,14:00:00
-22,It's a Wonderful Life,Drame,Salle 1,02/01/24,15:00:00
-23,Star Wars: Episode IV - A New Hope,Science-Fiction,Salle 2,02/01/24,16:00:00
-24,Whiplash,Drame,Salle 3,02/01/24,17:00:00
-25,The Departed,Crime,Salle 1,02/01/24,18:00:00
-26,The Pianist,Drame,Salle 2,02/01/24,19:00:00
-27,Back to the Future,Science-Fiction,Salle 3,02/01/24,20:00:00
-28,Gladiator,Action,Salle 1,02/01/24,21:00:00
-29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
-30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
-497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
-498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
-499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
-500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00
-1,Avatar,Science-Fiction,Salle 1,01/01/24,09:00:00
-2,Inception,Action,Salle 2,01/01/24,10:00:00
-3,Interstellar,Science-Fiction,Salle 3,01/01/24,11:00:00
-4,The Shawshank Redemption,Drame,Salle 1,01/01/24,12:00:00
-5,The Dark Knight,Action,Salle 2,01/01/24,13:00:00
-6,The Lord of the Rings: The Return of the King,Fantasy,Salle 3,01/01/24,14:00:00
-7,Forrest Gump,Drame,Salle 1,01/01/24,15:00:00
-8,Schindler's List,Drame,Salle 2,01/01/24,16:00:00
-9,The Matrix,Science-Fiction,Salle 3,01/01/24,17:00:00
-10,The Godfather,Drame,Salle 1,01/01/24,18:00:00
-11,Pulp Fiction,Crime,Salle 2,01/01/24,19:00:00
-12,The Lord of the Rings: The Fellowship of the Ring,Fantasy,Salle 3,01/01/24,20:00:00
-13,The Good the Bad and the Ugly,Western,Salle 1,01/01/24,21:00:00
-14,Fight Club,Drame,Salle 2,01/01/24,22:00:00
-15,Forrest Gump,Drame,Salle 3,01/01/24,23:00:00
-16,The Lord of the Rings: The Two Towers,Fantasy,Salle 1,02/01/24,09:00:00
-17,Goodfellas,Crime,Salle 2,02/01/24,10:00:00
-18,The Matrix,Science-Fiction,Salle 3,02/01/24,11:00:00
+18,The Matrix,Science-Fiction,Salle 3,02/01/24,25:00:78s
 19,City of God,Crime,Salle 1,02/01/24,12:00:00
 20,Se7en,Crime,Salle 2,02/01/24,13:00:00
 21,The Silence of the Lambs,Thriller,Salle 3,02/01/24,14:00:00
@@ -1083,7 +1083,7 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
 30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
 497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
-498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
+498,Avengers: Endgame,Action,Salle 2,30/14/24,13:00:00
 499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
 500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00
 1,Avatar,Science-Fiction,Salle 1,01/01/24,09:00:00
@@ -1287,6 +1287,6 @@ NumSeance,Film,Categorie,Salle,Date,Heure
 29,The Lion King,Fantasy,Salle 2,02/01/24,22:00:00
 30,The Green Mile,Drame,Salle 3,02/01/24,23:00:00
 497,Jaws,Thriller,Salle 1,30/04/24,09:30:00
-498,Avengers: Endgame,Action,Salle 2,30/04/24,10:00:00
+498,Avengers: Endgame,Action,Salle 2,30/04/24,34:56:00
 499,Spider-Man: Far From Home,Action,Salle 3,30/04/24,11:00:00
 500,Jurassic World: Dominion,Science-Fiction,Salle 1,30/04/24,12:00:00

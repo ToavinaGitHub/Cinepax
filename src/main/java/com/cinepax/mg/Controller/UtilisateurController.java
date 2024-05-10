@@ -8,6 +8,7 @@ import com.cinepax.mg.Service.ContentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -65,14 +66,35 @@ public class UtilisateurController {
 		SecurityContext sc = SecurityContextHolder.getContext();
 		sc.setAuthentication(authentication);
 
-
 		HttpSession s = request.getSession(true);
 		session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-
 
 		session.setAttribute("user" , user);
 
 		return "redirect:/v1/accueil";
+	}
+
+	@GetMapping("/insc")
+	public String insc(Model model)  {
+		Utilisateur u = new Utilisateur();
+		model.addAttribute("utilisateur",u);
+		return "Auth/inscription";
+	}
+
+	@PostMapping("/inscription")
+	public String inscription(@Valid Utilisateur u, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request){
+		Utilisateur user  = utilisateurRepository.findUtilisateurByEmail(u.getEmail());
+
+		if(user != null){
+			redirectAttributes.addFlashAttribute("error" , "Email deja prise");
+			return "redirect:/insc";
+		}
+
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
+
+		utilisateurRepository.save(u);
+		redirectAttributes.addFlashAttribute("message" , "Inscription avec succes");
+		return "redirect:/";
 	}
 
 	@GetMapping("/deco")
